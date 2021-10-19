@@ -1,4 +1,5 @@
 .DS_Store
 build
 xcuserdata
-*.sublime-project
+project.sublime-project
+project.sublime-workspace

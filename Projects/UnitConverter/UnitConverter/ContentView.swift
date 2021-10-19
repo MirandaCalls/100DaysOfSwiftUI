@@ -29,25 +29,42 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        VStack() {
-            Text("Unit Converter Pro+")
-                .font(.title)
-            HStack {
-                Text("Chosen Converter:")
-                Picker("", selection: $chosenConverter) {
-                    ForEach(0 ..< converters.count) {
-                        Text("\(converters[$0])")
-                    }
+        ZStack {
+            Color(UIColor.black)
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                HStack {
+                    Text("Unit Converter Pro+")
+                        .foregroundColor(Color.white)
+                        .font(.title)
+                        .fontWeight(.bold)
+                    Spacer()
                 }
+                
+                HStack {
+                    Text("Chosen Converter:")
+                    Picker("", selection: $chosenConverter) {
+                        ForEach(0 ..< converters.count) {
+                            Text("\(converters[$0])")
+                        }
+                    }
+                    Spacer()
+                }
+                .padding(10)
+                .background(Color.white)
+                    .cornerRadius(10)
+                    .shadow(radius: 10)
+                
+                if (chosenConverter == 0) {
+                    UnitConverter(plainTextUnits: lengths, dimensions: lengthDimensions)
+                } else {
+                    UnitConverter(plainTextUnits: temps, dimensions: tempDimensions)
+                }
+                Spacer()
             }
-            if (chosenConverter == 0) {
-                UnitConverter(plainTextUnits: lengths, dimensions: lengthDimensions)
-            } else {
-                UnitConverter(plainTextUnits: temps, dimensions: tempDimensions)
-            }
+            .padding(10)
         }
-        .frame(minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
-        .padding(10)
     }
 }
 
@@ -68,24 +85,23 @@ struct UnitConverter: View {
         VStack(spacing: 0) {
             HStack {
                 Text("Input")
-                    .frame(maxWidth: .infinity, maxHeight: 20)
+                    .frame(maxWidth: .infinity)
                 Text("Output")
-                    .frame(maxWidth: .infinity, maxHeight: 20)
+                    .frame(maxWidth: .infinity)
             }
-            .padding(5)
+            .padding(10)
             .overlay(Rectangle().frame(width: nil, height: 1, alignment: .top).foregroundColor(Color.gray), alignment: .bottom)
             
             HStack {
                 TextField("Input", text: $userInput)
                     .keyboardType(.decimalPad)
-                    .frame(width: 150, height: 25, alignment: .center)
                     .textFieldStyle(.roundedBorder)
+                    .frame(maxWidth: .infinity)
                 Text("=")
                 Text("\(runUnitConversion(), specifier: "%G")")
-                    .frame(width: 150, height: 25, alignment: .center)
+                    .frame(maxWidth: .infinity)
             }
             .padding(10)
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0)
             .overlay(Rectangle().frame(width: nil, height: 1, alignment: .top).foregroundColor(Color.gray), alignment: .bottom)
             
             HStack {
@@ -94,15 +110,18 @@ struct UnitConverter: View {
                         Text("\(plainTextUnits[$0])")
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: 30)
+                .frame(maxWidth: .infinity)
                 Picker("", selection: $outputUnit) {
                     ForEach(0 ..< plainTextUnits.count) {
                         Text("\(plainTextUnits[$0])")
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: 30)
+                .frame(maxWidth: .infinity)
             }
         }
+        .background(Color.white)
+        .cornerRadius(10)
+        .shadow(radius: 10)
     }
     
     func runUnitConversion() -> Double {

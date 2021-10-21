@@ -8,61 +8,119 @@
 import SwiftUI
 
 struct ContentView: View {
+    let successResponses = ["Good job!", "Way to go!", "Keep it up!"]
+    
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Monaco", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
     
-    @State private var showingScore = false
-    @State private var scoreTitle = ""
+    @State private var totalQuestions = 1
+    @State private var correctAnswers = 0
+    @State private var scoreText = ""
+    
+    @State private var showResultsAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+
+    @State private var gameComplete = false
     
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
-            VStack(spacing: 30) {
-                VStack {
-                    Text("Tap the flag of")
+            if !gameComplete {
+                VStack(spacing: 30) {
+                    VStack {
+                        Text("Tap the flag of")
+                            .foregroundColor(.white)
+                        Text(countries[correctAnswer])
+                            .foregroundColor(.white)
+                            .font(.largeTitle)
+                            .fontWeight(.black)
+                    }
+    
+                    ForEach(0 ..< 3) { number in
+                        Button(action: {
+                            flagTapped(number)
+                        }) {
+                            Image(self.countries[number])
+                                .renderingMode(.original)
+                                .clipShape(Capsule())
+                                .overlay(Capsule().stroke(.black, lineWidth: 1))
+                                .shadow(color: .black, radius: 2)
+                        }
+                    }
+                    
+                    Text(scoreText)
+                        .font(.title2)
                         .foregroundColor(.white)
-                    Text(countries[correctAnswer])
-                        .foregroundColor(.white)
-                        .font(.largeTitle)
-                        .fontWeight(.black)
+                    Spacer()
                 }
-                
-                ForEach(0 ..< 3) { number in
+            } else {
+                VStack(spacing: 50) {
+                    VStack(spacing: 10) {
+                        Text("Final Score")
+                            .font(.largeTitle)
+                            .foregroundColor(.white)
+                            .fontWeight(.black)
+                        Text("\(correctAnswers) / \(totalQuestions) correct")
+                            .font(.title)
+                            .foregroundColor(.white)
+                    }
                     Button(action: {
-                        flagTapped(number)
+                        restartGame()
                     }) {
-                        Image(self.countries[number])
-                            .renderingMode(.original)
-                            .clipShape(Capsule())
-                            .overlay(Capsule().stroke(.black, lineWidth: 1))
-                            .shadow(color: .black, radius: 2)
+                        Text("Play Again")
+                            .padding([.top, .bottom], 10)
+                            .padding([.leading, .trailing], 20)
+                            .background(Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(40)
                     }
                 }
-                Spacer()
             }
         }
         
-        .alert(isPresented: $showingScore) {
-            Alert(title: Text(scoreTitle), message: Text("Your score is ???"), dismissButton: .default(Text("Continue")) {
-                    self.askQuestion()
+        .alert(isPresented: $showResultsAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Continue")) {
+                self.askQuestion()
             })
         }
     }
     
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
-            scoreTitle = "Correct"
+            alertTitle = "Correct"
+            alertMessage = successResponses.randomElement() ?? successResponses[0]
+            correctAnswers += 1
         } else {
-            scoreTitle = "Wrong"
+            alertTitle = "Wrong"
+            alertMessage = "You chose the flag of \(countries[number])."
         }
         
-        showingScore = true
+        showResultsAlert = true
     }
     
     func askQuestion() {
+        if (totalQuestions == 10) {
+            gameComplete = true
+            return
+        }
+        
+        if totalQuestions != 0 {
+            scoreText = "Score: \(correctAnswers)/\(totalQuestions)"
+        }
+        
+        totalQuestions += 1
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+    }
+    
+    func restartGame() {
+        gameComplete = false
+        scoreText = ""
+        totalQuestions = 0
+        correctAnswers = 0
+        askQuestion()
     }
 }
 

@@ -42,11 +42,7 @@ struct ContentView: View {
                         Button(action: {
                             flagTapped(number)
                         }) {
-                            Image(self.countries[number])
-                                .renderingMode(.original)
-                                .clipShape(Capsule())
-                                .overlay(Capsule().stroke(.black, lineWidth: 1))
-                                .shadow(color: .black, radius: 2)
+                            FlagImage(imageName: self.countries[number])
                         }
                     }
                     
@@ -121,6 +117,18 @@ struct ContentView: View {
         totalQuestions = 0
         correctAnswers = 0
         askQuestion()
+    }
+}
+
+struct FlagImage: View {
+    var imageName: String
+    
+    var body: some View {
+        Image(imageName)
+            .renderingMode(.original)
+            .clipShape(Capsule())
+            .overlay(Capsule().stroke(.black, lineWidth: 1))
+            .shadow(color: .black, radius: 2)
     }
 }
 

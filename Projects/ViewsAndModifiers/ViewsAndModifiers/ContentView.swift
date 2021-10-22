@@ -63,6 +63,9 @@ struct ContentView: View {
                     .frame(width: 200, height: 200)
                     .watermarked(with: "Hacking with Swift")
             }
+            
+            Text("Very Prominent Title")
+                .deepBlueSea()
         }
     }
 }
@@ -91,7 +94,19 @@ struct Watermarked: ViewModifier {
     }
 }
 
+struct DeepBlueSea: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(Color.blue)
+            .font(.largeTitle)
+    }
+}
+
 extension View {
+    func deepBlueSea() -> some View {
+        self.modifier(DeepBlueSea())
+    }
+    
     func titleStyle() -> some View {
         self.modifier(SpecialModifier())
     }

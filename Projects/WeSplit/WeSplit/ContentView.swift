@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var calculateButtonShown = true
     @State private var totalsShown = false
+    @State private var warningShown = false
     
     @State private var checkAmount = ""
     @State private var numberOfPeople = ""
@@ -41,6 +42,9 @@ struct ContentView: View {
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
+                    .onChange(of: tipPercentage) { newValue in
+                        warningShown = newValue == 4
+                    }
                 }
                 
                 if calculateButtonShown {
@@ -60,7 +64,7 @@ struct ContentView: View {
                     let total_per_person = total_bill / sanitizeTotalPeople()
                     
                     Section(header: Text("Amount + Tip")) {
-                        Text("$\(total_bill, specifier: "%.2f")")
+                        Text("$\(total_bill, specifier: "%.2f")").foregroundColor(warningShown ? Color.red : Color.black)
                     }
                     Section(header: Text("Amount Per Person")) {
                         Text("$\(total_per_person, specifier: "%.2f")")

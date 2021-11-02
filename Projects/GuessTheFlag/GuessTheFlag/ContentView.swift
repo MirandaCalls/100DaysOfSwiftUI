@@ -15,11 +15,11 @@ struct ContentView: View {
     
     @State private var totalQuestions = 1
     @State private var correctAnswers = 0
-    @State private var scoreText = ""
     
     @State private var showResultsAlert = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
+    @State private var tappedFlag = 0
 
     @State private var gameComplete = false
     
@@ -39,14 +39,15 @@ struct ContentView: View {
                     }
     
                     ForEach(0 ..< 3) { number in
-                        Button(action: {
+                        FlagButton(
+                            imageName: self.countries[number],
+                            isActive: !showResultsAlert || tappedFlag == number
+                        ) {
                             flagTapped(number)
-                        }) {
-                            FlagImage(imageName: self.countries[number])
                         }
                     }
                     
-                    Text(scoreText)
+                    Text("Score: \(correctAnswers)/\(totalQuestions)")
                         .font(.title2)
                         .foregroundColor(.white)
                     Spacer()
@@ -73,6 +74,7 @@ struct ContentView: View {
                             .cornerRadius(40)
                     }
                 }
+                .transition(.scale)
             }
         }
         
@@ -84,6 +86,8 @@ struct ContentView: View {
     }
     
     func flagTapped(_ number: Int) {
+        tappedFlag = number
+        
         if number == correctAnswer {
             alertTitle = "Correct"
             alertMessage = successResponses.randomElement() ?? successResponses[0]
@@ -98,12 +102,10 @@ struct ContentView: View {
     
     func askQuestion() {
         if (totalQuestions == 10) {
-            gameComplete = true
+            withAnimation {
+                gameComplete = true
+            }
             return
-        }
-        
-        if totalQuestions != 0 {
-            scoreText = "Score: \(correctAnswers)/\(totalQuestions)"
         }
         
         totalQuestions += 1
@@ -113,22 +115,36 @@ struct ContentView: View {
     
     func restartGame() {
         gameComplete = false
-        scoreText = ""
         totalQuestions = 0
         correctAnswers = 0
         askQuestion()
     }
 }
 
-struct FlagImage: View {
+struct FlagButton: View {
     var imageName: String
+    var isActive: Bool
+    var action: () -> Void
+    
+    @State private var spinDegrees = 0.0
     
     var body: some View {
-        Image(imageName)
-            .renderingMode(.original)
-            .clipShape(Capsule())
-            .overlay(Capsule().stroke(.black, lineWidth: 1))
-            .shadow(color: .black, radius: 2)
+        Button(action: {
+            withAnimation(.easeInOut(duration: 0.5)) {
+                spinDegrees += 360
+            }
+            self.action()
+        }) {
+            Image(imageName)
+                .renderingMode(.original)
+                .clipShape(Capsule())
+                .overlay(Capsule().stroke(.black, lineWidth: 1))
+                .shadow(color: .black, radius: 2)
+                .opacity(isActive ? 1 : 0.25)
+                .animation(.default)
+                .rotation3DEffect(.degrees(spinDegrees), axis: (x: 0, y: 1, z: 0))
+        }
+
     }
 }
 

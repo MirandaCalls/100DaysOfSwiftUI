@@ -23,7 +23,16 @@ struct ContentView: View {
                             Text(item.type)
                         }
                         Spacer()
-                        Text("$\(item.amount, specifier: "%G")")
+                        HStack(spacing: 5) {
+                            if item.amount >= 10 {
+                                generateWarning(for: item.amount)
+                            }
+                            
+                            let locale = Locale.current
+                            let currencySymbol = locale.currencySymbol!
+                            Text("\(currencySymbol)\(item.amount, specifier: "%G")")
+                        }
+                        
                     }
                 }
                 .onDelete(perform: removeItems)
@@ -40,6 +49,14 @@ struct ContentView: View {
         .sheet(isPresented: $showingAddExpense) {
             AddItemView(expenses: self.expenses)
         }
+    }
+    
+    func generateWarning(for amount: Double) -> some View {
+        Image(systemName: "exclamationmark.circle")
+            .foregroundColor(.white)
+            .padding(5)
+            .background(amount < 100 ? Color.yellow : Color.red)
+            .cornerRadius(10)
     }
     
     func removeItems(at offsets: IndexSet) {

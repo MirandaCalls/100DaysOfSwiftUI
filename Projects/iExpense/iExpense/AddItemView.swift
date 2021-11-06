@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct AddItemView: View {
+    let AMOUNT_ERROR = "Value must be a number"
+    
     @Environment(\.presentationMode) var presentationMode
     
     @ObservedObject var expenses: Expenses
     
     @State private var name = ""
     @State private var type = "Personal"
+    
     @State private var amount = ""
+    @State private var amountInvalid = false
     
     static let types = ["Business", "Personal"]
     
@@ -29,8 +33,16 @@ struct AddItemView: View {
                     }
                 }
                 
-                TextField("Amount", text: $amount)
-                    .keyboardType(.decimalPad)
+                VStack(alignment: .leading) {
+                    TextField("Amount", text: $amount)
+                        .keyboardType(.decimalPad)
+                        .onChange(of: amount, perform: validateAmount)
+                    if amountInvalid {
+                        Text(AMOUNT_ERROR)
+                            .foregroundColor(.red)
+                            .font(.caption)
+                    }
+                }
             }
             .navigationBarTitle("Add new expense")
             .navigationBarItems(trailing:
@@ -43,6 +55,10 @@ struct AddItemView: View {
                 }
             )
         }
+    }
+    
+    func validateAmount(newValue: String) {
+        amountInvalid = Double(self.amount) == nil
     }
 }
 

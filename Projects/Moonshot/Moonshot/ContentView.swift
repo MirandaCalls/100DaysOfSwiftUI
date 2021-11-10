@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    let missions: [Mission] =  Bundle.main.decode("missions.json")
     let astronauts: [Astronaut] = Bundle.main.decode("astronauts.json")
-    let missions: [Mission] = Bundle.main.decode("missions.json")
     
     var body: some View {
         NavigationView {
-            List(missions) { mission in
-                NavigationLink(destination: MissionView(mission: mission, astronauts: self.astronauts)) {
+            List(self.missions) { mission in
+                NavigationLink(destination: MissionView(mission: mission, allAstronauts: self.astronauts, allMissions: self.missions)) {
                     Image(mission.image)
                         .resizable()
                         .scaledToFit()

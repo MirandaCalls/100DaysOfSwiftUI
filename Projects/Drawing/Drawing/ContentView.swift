@@ -18,11 +18,13 @@ struct ContentView: View {
         // MeowBorder()
         // MetalDrawingGroup()
         // RedBlendImage()
-        ColorPallete()
+        // ColorPallete()
         // CatBlurSlider()
         // AnimatedTrapezoid()
         // AnimatedCheckerBoard()
         // SpirographDemo()
+        // ArrowDemo()
+        SpaceCat()
     }
 }
 
@@ -439,6 +441,129 @@ struct SpirographDemo: View {
     }
 }
 
+struct Arrow: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        let one_fourth_y = rect.maxY / 4
+        let one_third_x = rect.maxX / 3
+        
+        // Triangle
+        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.minX, y: one_fourth_y))
+        path.addLine(to: CGPoint(x: rect.maxX, y: one_fourth_y))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+        
+        // Rectangle
+        path.move(to: CGPoint(x: one_third_x, y: one_fourth_y))
+        path.addLine(to: CGPoint(x: one_third_x, y: rect.maxY))
+        path.addLine(to: CGPoint(x: one_third_x * 2, y: rect.maxY))
+        path.addLine(to: CGPoint(x: one_third_x * 2, y: one_fourth_y))
+        
+        return path
+    }
+}
+
+struct ArrowDemo: View {
+    @State private var percentageSize: CGFloat = 1
+    
+    var body: some View {
+        Arrow()
+            .frame(width: 300 * percentageSize, height: 600 * percentageSize)
+            .onTapGesture {
+                withAnimation {
+                    self.percentageSize = CGFloat(Double(Int.random(in: 40...100)) / Double(100))
+                }
+            }
+    }
+}
+
+struct ColorCyclingRectangle: View {
+    var amount = 0.0
+    var steps = 80
+    var gradientStart: UnitPoint = .top
+    var gradientStop: UnitPoint = .bottom
+    
+    var body: some View {
+        ZStack {
+            ForEach(0..<steps) { value in
+                Rectangle()
+                    .inset(by: CGFloat(value))
+                    .strokeBorder(LinearGradient(gradient: Gradient(colors: [
+                        self.color(for: value, brightness: 1),
+                        self.color(for: value, brightness: 0.5)
+                    ]), startPoint: gradientStart, endPoint: gradientStop), lineWidth: 2)
+            }
+        }
+        .drawingGroup()
+        .edgesIgnoringSafeArea(.all)
+    }
+    
+    func color(for value: Int, brightness: Double) -> Color {
+        var targetHue = Double(value) / Double(self.steps) + self.amount
+        
+        if targetHue > 1 {
+            targetHue -= 1
+        }
+        
+        return Color(hue: targetHue, saturation: 1, brightness: brightness)
+    }
+}
+
+struct SpaceCat: View {
+    @State private var colorCycle = 0.0
+    
+    @State private var catOffset = CGSize(width: 0, height: -200)
+    @State private var catDirection: CGFloat = 10
+    
+    @State private var gradientStart: UnitPoint = .top
+    @State private var gradientStop: UnitPoint = .bottom
+    
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    
+    var body: some View {
+        VStack {
+            ZStack {
+                Image("Space")
+                    .resizable()
+                    .scaledToFit()
+                
+                ColorCyclingRectangle(amount: self.colorCycle, gradientStart: self.gradientStart, gradientStop: self.gradientStop)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                Image("SurprisedCat")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 350)
+                    .offset(catOffset)
+                    .animation(.linear)
+            }
+        }
+        .onReceive(timer) { input in
+            if self.catOffset.height > 200 {
+                self.catDirection = -10
+            } else if self.catOffset.height < -200 {
+                self.catDirection = 10
+            }
+            
+            self.catOffset.height += catDirection
+            
+            if catOffset.height < 0 {
+                self.gradientStart = .top
+                self.gradientStop = .bottom
+            } else {
+                self.gradientStart = .bottom
+                self.gradientStop = .top
+            }
+            
+            var new_value = self.colorCycle + 0.01
+            if new_value > 1 {
+                new_value = 0.01
+            }
+            self.colorCycle = new_value
+        }
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

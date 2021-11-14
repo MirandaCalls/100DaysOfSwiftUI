@@ -1,0 +1,26 @@
+[
+	{
+		"id": "fish",
+		"name": "100 Days of Swift",
+		"description": "Practice Swift every day for 100 days.",
+		"activities": [
+			{
+				"id": "fishfish",
+				"notes": "Something inspiring really",
+				"completedOn": "2021-11-14T10:31"
+			}
+		]
+	},
+	{
+		"id": "cat",
+		"name": "Practice Bassoon",
+		"description": "Scales, concert pieces, something for fun. (15 minutes)",
+		"activities": [
+			{
+				"id": "catcat",
+				"notes": "Something inspiring really",
+				"completedOn": "2021-11-14T15:22"
+			}
+		]
+	}
+]

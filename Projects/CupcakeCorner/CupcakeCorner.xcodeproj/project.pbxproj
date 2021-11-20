@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A58D641727488B2F006F005A /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58D641627488B2F006F005A /* AppData.swift */; };
 		A5C6C3C82744957200DA4139 /* CupcakeCornerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C6C3C72744957200DA4139 /* CupcakeCornerApp.swift */; };
 		A5C6C3CA2744957200DA4139 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C6C3C92744957200DA4139 /* ContentView.swift */; };
 		A5C6C3CC2744957400DA4139 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5C6C3CB2744957400DA4139 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A58D641627488B2F006F005A /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		A5C6C3C42744957200DA4139 /* CupcakeCorner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CupcakeCorner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5C6C3C72744957200DA4139 /* CupcakeCornerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CupcakeCornerApp.swift; sourceTree = "<group>"; };
 		A5C6C3C92744957200DA4139 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -59,9 +61,10 @@
 			children = (
 				A5C6C3C72744957200DA4139 /* CupcakeCornerApp.swift */,
 				A5C6C3C92744957200DA4139 /* ContentView.swift */,
-				A5ED1A122745CC7C002544FB /* Order.swift */,
 				A5ED1A142745D0FA002544FB /* AddressView.swift */,
 				A5ED1A162745D247002544FB /* CheckoutView.swift */,
+				A5ED1A122745CC7C002544FB /* Order.swift */,
+				A58D641627488B2F006F005A /* AppData.swift */,
 				A5C6C3CB2744957400DA4139 /* Assets.xcassets */,
 				A5C6C3CD2744957400DA4139 /* Preview Content */,
 			);
@@ -151,6 +154,7 @@
 				A5ED1A172745D247002544FB /* CheckoutView.swift in Sources */,
 				A5C6C3CA2744957200DA4139 /* ContentView.swift in Sources */,
 				A5C6C3C82744957200DA4139 /* CupcakeCornerApp.swift in Sources */,
+				A58D641727488B2F006F005A /* AppData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,6 +15,12 @@ struct DetailView: View {
     @State private var showingDeleteAlert = false
     
     let book: Book
+    var formattedDateAdded: String {
+        let date = self.book.dateAdded ?? Date()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter.string(from: date)
+    }
     
     var body: some View {
         GeometryReader { geo in
@@ -33,15 +39,44 @@ struct DetailView: View {
                         .offset(x: -5, y: -5)
                 }
                 
+                Text("WRITTEN BY")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .padding([.top])
                 Text(self.book.author ?? "Unknown author")
                     .font(.title)
                     .foregroundColor(.secondary)
                 
-                Text(self.book.review ?? "No review")
-                    .padding()
-                
                 RatingView(rating: .constant(Int(self.book.rating)))
                     .font(.largeTitle)
+                    .padding(EdgeInsets(top: 2, leading: 0, bottom: 0, trailing: 0))
+                
+                VStack(alignment: .leading) {
+                    Divider()
+                    Text("ADDED ON")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                    Text(self.formattedDateAdded)
+                        .padding(EdgeInsets(top: 2, leading: 0, bottom: 0, trailing: 0))
+                    
+                    Divider()
+                    Text("REVIEW")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                    if self.book.review == nil {
+                        HStack {
+                            Spacer()
+                            Text("No review")
+                            Spacer()
+                        }
+                        .padding(EdgeInsets(top: 2, leading: 0, bottom: 0, trailing: 0))
+                    } else {
+                        Text(self.book.review!)
+                            .padding(EdgeInsets(top: 2, leading: 0, bottom: 0, trailing: 0))
+                    }
+                    
+                }
+                .padding()
                 
                 Spacer()
             }

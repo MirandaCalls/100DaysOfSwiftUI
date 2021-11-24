@@ -12,6 +12,15 @@ struct PersistenceController {
 
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
+        
+        let book = Book(context: result.container.viewContext)
+        book.title = "Fullmetal Alchemist vol. 1"
+        book.author = "Hiromu Arakawa"
+        book.genre = "Fantasy"
+        book.rating = 5
+        book.review = "10/10 would read again"
+        try? result.container.viewContext.save()
+        
         return result
     }()
 

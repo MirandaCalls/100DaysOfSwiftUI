@@ -17,6 +17,10 @@ struct AddBookView: View {
     @State private var genre = ""
     @State private var review = ""
     
+    var formMissingData: Bool {
+        title == "" || author == "" || genre == ""
+    }
+    
     let genres = ["Fantasy", "Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
     
     var body: some View {
@@ -40,6 +44,7 @@ struct AddBookView: View {
                 Section {
                     Button("Save", action: self.saveBook)
                 }
+                .disabled(self.formMissingData)
             }
             .navigationBarTitle("Add Book")
         }
@@ -52,6 +57,7 @@ struct AddBookView: View {
         new_book.rating = Int16(self.rating)
         new_book.genre = self.genre
         new_book.review = self.review
+        new_book.dateAdded = Date()
         
         try? self.moc.save()
         self.presentationMode.wrappedValue.dismiss()

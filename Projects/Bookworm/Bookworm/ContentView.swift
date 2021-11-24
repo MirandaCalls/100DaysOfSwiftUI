@@ -22,14 +22,27 @@ struct ContentView: View {
             List {
                 ForEach(books, id: \.self) { book in
                     NavigationLink(destination: DetailView(book: book)) {
-                        EmojiRatingView(rating: book.rating)
-                            .font(.largeTitle)
-                        
-                        VStack(alignment: .leading) {
-                            Text(book.title ?? "Unknown title")
-                                .font(.headline)
-                            Text(book.author ?? "Unknown author")
-                                .foregroundColor(.secondary)
+                        HStack {
+                            EmojiRatingView(rating: book.rating)
+                                .font(.largeTitle)
+                            
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(book.title ?? "Unknown title")
+                                    .font(.headline)
+                                Text(book.author ?? "Unknown author")
+                                    .foregroundColor(.secondary)
+                                if book.rating == 1 {
+                                    Text("🤮 Certified Rotten")
+                                        .foregroundColor(.white)
+                                        .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                                        .background(Color(red: 1.0, green: 0.4, blue: 0.4))
+                                        .clipShape(Capsule())
+                                        .overlay(
+                                            Capsule()
+                                                .stroke(Color.black, lineWidth: 1)
+                                        )
+                                }
+                            }
                         }
                     }
                 }

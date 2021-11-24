@@ -68,9 +68,9 @@
 				A54E635E274B21B200B13C0E /* RatingView.swift */,
 				A58D644727495A63006F005A /* ContentView.swift */,
 				A54E6360274B248700B13C0E /* EmojiRatingView.swift */,
-				A58D644927495A67006F005A /* Assets.xcassets */,
 				A54E6362274C885F00B13C0E /* DetailView.swift */,
 				A58D644E27495A67006F005A /* Persistence.swift */,
+				A58D644927495A67006F005A /* Assets.xcassets */,
 				A58D645027495A67006F005A /* Bookworm.xcdatamodeld */,
 				A58D644B27495A67006F005A /* Preview Content */,
 			);

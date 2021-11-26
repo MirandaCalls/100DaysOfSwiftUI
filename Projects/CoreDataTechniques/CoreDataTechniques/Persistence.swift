@@ -12,6 +12,21 @@ struct PersistenceController {
 
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
+        let context = result.container.viewContext;
+        
+        let trucker = SpaceTrucker(context: context)
+        trucker.name = "Ellen Ripley"
+        
+        let ship = Ship()
+        ship.name = "U.S.S. Voyager"
+        ship.universe = "Star Trek"
+        
+        let singer = Singer()
+        singer.firstName = "Taylor"
+        singer.lastName = "Swift"
+        
+        try? context.save()
+        
         return result
     }()
 

@@ -14,8 +14,8 @@ struct ContentView: View {
         // CheckForChangesDemo()
         // CoreDataConstraintsDemo()
         // PredicateDemo()
-        // DynamicFilteringDemo()
-        CoreDataRelationships()
+        DynamicFilteringDemo()
+        // CoreDataRelationships()
     }
 }
 
@@ -110,8 +110,13 @@ struct PredicateDemo: View {
     }
 }
 
+enum FilteredListOptions {
+    case beginsWith, contains
+}
+
 struct FilteredList<T: NSManagedObject, Content: View>: View {
     var fetchRequest: FetchRequest<T>
+    
     var singers: FetchedResults<T> {
         fetchRequest.wrappedValue
     }
@@ -124,19 +129,60 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
         }
     }
     
-    init(filterKey: String, filterValue: String, @ViewBuilder content: @escaping (T) -> Content) {
-        self.fetchRequest = FetchRequest<T>(entity: T.entity(), sortDescriptors: [], predicate: NSPredicate(format: "%K BEGINSWITH %@", filterKey, filterValue))
+    init(
+        filterModifier: FilteredListOptions,
+        filterKey: String,
+        filterValue: String,
+        sortDescriptors: [NSSortDescriptor],
+        @ViewBuilder content: @escaping (T) -> Content
+    ) {
+        var predicate: NSPredicate? = nil
+        if filterModifier == FilteredListOptions.beginsWith && filterValue != "" {
+            predicate = NSPredicate(format: "%K BEGINSWITH %@", filterKey, filterValue)
+        } else if filterModifier == FilteredListOptions.contains {
+            predicate = NSPredicate(format: "%K LIKE \"*\(filterValue)*\"", filterKey, filterValue)
+        }
+        
+        self.fetchRequest = FetchRequest<T>(entity: T.entity(), sortDescriptors: sortDescriptors, predicate: predicate)
         self.content = content
     }
 }
 
 struct DynamicFilteringDemo: View {
+    let filterOptions = [
+        FilteredListOptions.beginsWith,
+        FilteredListOptions.contains
+    ]
+    let filterOptionsLabels = [
+        "BEGINS WITH",
+        "CONTAINS"
+    ]
+    
     @Environment(\.managedObjectContext) var moc
-    @State private var lastNameFilter = "A"
+    @State private var filterType = 0
+    @State private var lastNameFilter = ""
     
     var body: some View {
         VStack {
-            FilteredList(filterKey: "lastName", filterValue: lastNameFilter) { (singer: Singer) in
+            VStack {
+                Text("Last Name Search")
+                
+                Picker("Selection", selection: $filterType) {
+                    ForEach(0..<filterOptions.count) {
+                        Text("\(filterOptionsLabels[$0])")
+                    }
+                }
+                .pickerStyle(.segmented)
+                
+                TextField("Search", text: $lastNameFilter)
+                    .textFieldStyle(.roundedBorder)
+                    .autocapitalization(.none)
+            }
+            .padding()
+            
+            FilteredList(filterModifier: self.filterOptions[self.filterType], filterKey: "lastName", filterValue: lastNameFilter, sortDescriptors: [
+                NSSortDescriptor(key: "firstName", ascending: true)
+            ]) { (singer: Singer) in
                 Text("\(singer.wrappedFirstName) \(singer.wrappedLastName)")
             }
             
@@ -154,14 +200,6 @@ struct DynamicFilteringDemo: View {
                 adele.lastName = "Adkins"
                 
                 try? self.moc.save()
-            }
-            
-            Button("Show A") {
-                self.lastNameFilter = "A"
-            }
-            
-            Button("Show S") {
-                self.lastNameFilter = "S"
             }
         }
     }

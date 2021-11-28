@@ -12,7 +12,21 @@ struct PersistenceController {
 
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
-        // let viewContext = result.container.viewContext
+        let viewContext = result.container.viewContext
+
+        let class_member = ClassMember(context: viewContext)
+        class_member.id = "882060147325108225"
+        class_member.name = "Geoffrie Alena"
+        class_member.username = "MirandaCalls"
+        class_member.bio = "🏳️‍⚧️ Curious web developer with a deep love for anime and music. Learning Swift and iOS in #100DaysOfSwiftUI. Stay shiny everyone! (she/her)"
+        class_member.profileImageUrl = "https://pbs.twimg.com/profile_images/1459648977104687109/9evn-YVz_normal.jpg"
+        class_member.url = "https://t.co/TtFeKcMnZ4"
+        class_member.joinedAt = Date()
+        
+        let friend = Friend(context: viewContext)
+        friend.id = "882060147325108225"
+        friend.classMember = class_member
+        
         return result
     }()
 

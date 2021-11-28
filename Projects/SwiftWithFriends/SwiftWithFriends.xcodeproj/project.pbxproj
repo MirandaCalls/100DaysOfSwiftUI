@@ -7,19 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A51527032754159800BFBA6F /* ClassMemberDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51527022754159800BFBA6F /* ClassMemberDto.swift */; };
 		A51F399527531BA0009D8BF2 /* SwiftWithFriendsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51F399427531BA0009D8BF2 /* SwiftWithFriendsApp.swift */; };
 		A51F399727531BA0009D8BF2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51F399627531BA0009D8BF2 /* ContentView.swift */; };
 		A51F399927531BA4009D8BF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A51F399827531BA4009D8BF2 /* Assets.xcassets */; };
 		A51F399C27531BA4009D8BF2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A51F399B27531BA4009D8BF2 /* Preview Assets.xcassets */; };
 		A51F399E27531BA4009D8BF2 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51F399D27531BA4009D8BF2 /* Persistence.swift */; };
 		A51F39A127531BA4009D8BF2 /* SwiftWithFriends.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A51F399F27531BA4009D8BF2 /* SwiftWithFriends.xcdatamodeld */; };
-		A51F39A827531C38009D8BF2 /* ClassMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51F39A727531C38009D8BF2 /* ClassMember.swift */; };
 		A51F39AA27531D73009D8BF2 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51F39A927531D73009D8BF2 /* Networking.swift */; };
 		A51F39AC275329A1009D8BF2 /* ClassMemberDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51F39AB275329A1009D8BF2 /* ClassMemberDetailView.swift */; };
 		A51F39AE2753324C009D8BF2 /* ClassMemberLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51F39AD2753324C009D8BF2 /* ClassMemberLinkView.swift */; };
+		A51F39C3275403DA009D8BF2 /* ClassMember+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51F39BF275403DA009D8BF2 /* ClassMember+CoreDataClass.swift */; };
+		A51F39C4275403DA009D8BF2 /* ClassMember+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51F39C0275403DA009D8BF2 /* ClassMember+CoreDataProperties.swift */; };
+		A51F39C5275403DA009D8BF2 /* Friend+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51F39C1275403DA009D8BF2 /* Friend+CoreDataClass.swift */; };
+		A51F39C6275403DA009D8BF2 /* Friend+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51F39C2275403DA009D8BF2 /* Friend+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A51527022754159800BFBA6F /* ClassMemberDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMemberDto.swift; sourceTree = "<group>"; };
 		A51F399127531BA0009D8BF2 /* SwiftWithFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftWithFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51F399427531BA0009D8BF2 /* SwiftWithFriendsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftWithFriendsApp.swift; sourceTree = "<group>"; };
 		A51F399627531BA0009D8BF2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -27,10 +32,13 @@
 		A51F399B27531BA4009D8BF2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A51F399D27531BA4009D8BF2 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		A51F39A027531BA4009D8BF2 /* SwiftWithFriends.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SwiftWithFriends.xcdatamodel; sourceTree = "<group>"; };
-		A51F39A727531C38009D8BF2 /* ClassMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMember.swift; sourceTree = "<group>"; };
 		A51F39A927531D73009D8BF2 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		A51F39AB275329A1009D8BF2 /* ClassMemberDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMemberDetailView.swift; sourceTree = "<group>"; };
 		A51F39AD2753324C009D8BF2 /* ClassMemberLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMemberLinkView.swift; sourceTree = "<group>"; };
+		A51F39BF275403DA009D8BF2 /* ClassMember+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClassMember+CoreDataClass.swift"; sourceTree = "<group>"; };
+		A51F39C0275403DA009D8BF2 /* ClassMember+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClassMember+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A51F39C1275403DA009D8BF2 /* Friend+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Friend+CoreDataClass.swift"; sourceTree = "<group>"; };
+		A51F39C2275403DA009D8BF2 /* Friend+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Friend+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +52,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A515270127540D2800BFBA6F /* CoreDataModels */ = {
+			isa = PBXGroup;
+			children = (
+				A51F39BF275403DA009D8BF2 /* ClassMember+CoreDataClass.swift */,
+				A51F39C0275403DA009D8BF2 /* ClassMember+CoreDataProperties.swift */,
+				A51F39C1275403DA009D8BF2 /* Friend+CoreDataClass.swift */,
+				A51F39C2275403DA009D8BF2 /* Friend+CoreDataProperties.swift */,
+			);
+			path = CoreDataModels;
+			sourceTree = "<group>";
+		};
 		A51F398827531BA0009D8BF2 = {
 			isa = PBXGroup;
 			children = (
@@ -68,9 +87,10 @@
 				A51F39AD2753324C009D8BF2 /* ClassMemberLinkView.swift */,
 				A51F39AB275329A1009D8BF2 /* ClassMemberDetailView.swift */,
 				A51F39A927531D73009D8BF2 /* Networking.swift */,
-				A51F39A727531C38009D8BF2 /* ClassMember.swift */,
+				A51527022754159800BFBA6F /* ClassMemberDto.swift */,
 				A51F399D27531BA4009D8BF2 /* Persistence.swift */,
 				A51F399F27531BA4009D8BF2 /* SwiftWithFriends.xcdatamodeld */,
+				A515270127540D2800BFBA6F /* CoreDataModels */,
 				A51F399827531BA4009D8BF2 /* Assets.xcassets */,
 				A51F399A27531BA4009D8BF2 /* Preview Content */,
 			);
@@ -156,10 +176,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A51F39AC275329A1009D8BF2 /* ClassMemberDetailView.swift in Sources */,
-				A51F39A827531C38009D8BF2 /* ClassMember.swift in Sources */,
+				A51F39C5275403DA009D8BF2 /* Friend+CoreDataClass.swift in Sources */,
+				A51F39C6275403DA009D8BF2 /* Friend+CoreDataProperties.swift in Sources */,
 				A51F399E27531BA4009D8BF2 /* Persistence.swift in Sources */,
+				A51527032754159800BFBA6F /* ClassMemberDto.swift in Sources */,
 				A51F39AE2753324C009D8BF2 /* ClassMemberLinkView.swift in Sources */,
 				A51F39A127531BA4009D8BF2 /* SwiftWithFriends.xcdatamodeld in Sources */,
+				A51F39C3275403DA009D8BF2 /* ClassMember+CoreDataClass.swift in Sources */,
+				A51F39C4275403DA009D8BF2 /* ClassMember+CoreDataProperties.swift in Sources */,
 				A51F39AA27531D73009D8BF2 /* Networking.swift in Sources */,
 				A51F399727531BA0009D8BF2 /* ContentView.swift in Sources */,
 				A51F399527531BA0009D8BF2 /* SwiftWithFriendsApp.swift in Sources */,

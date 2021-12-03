@@ -11,6 +11,7 @@
 		A56C17BB2755BB42002083C7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56C17BA2755BB42002083C7 /* ContentView.swift */; };
 		A56C17BD2755BB44002083C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A56C17BC2755BB44002083C7 /* Assets.xcassets */; };
 		A56C17C02755BB44002083C7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A56C17BF2755BB44002083C7 /* Preview Assets.xcassets */; };
+		A588700F2759CE6400054245 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A588700E2759CE6300054245 /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		A56C17BA2755BB42002083C7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A56C17BC2755BB44002083C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A56C17BF2755BB44002083C7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A588700E2759CE6300054245 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				A56C17B82755BB42002083C7 /* InstafilterApp.swift */,
 				A56C17BA2755BB42002083C7 /* ContentView.swift */,
+				A588700E2759CE6300054245 /* ImagePicker.swift */,
 				A56C17BC2755BB44002083C7 /* Assets.xcassets */,
 				A56C17BE2755BB44002083C7 /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A588700F2759CE6400054245 /* ImagePicker.swift in Sources */,
 				A56C17BB2755BB42002083C7 /* ContentView.swift in Sources */,
 				A56C17B92755BB42002083C7 /* InstafilterApp.swift in Sources */,
 			);

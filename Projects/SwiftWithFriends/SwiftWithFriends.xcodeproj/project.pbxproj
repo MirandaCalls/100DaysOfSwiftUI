@@ -82,6 +82,7 @@
 		A51F399327531BA0009D8BF2 /* SwiftWithFriends */ = {
 			isa = PBXGroup;
 			children = (
+				A51F399827531BA4009D8BF2 /* Assets.xcassets */,
 				A51F399427531BA0009D8BF2 /* SwiftWithFriendsApp.swift */,
 				A51F399627531BA0009D8BF2 /* ContentView.swift */,
 				A51F39AD2753324C009D8BF2 /* ClassMemberLinkView.swift */,
@@ -91,7 +92,6 @@
 				A51F399D27531BA4009D8BF2 /* Persistence.swift */,
 				A51F399F27531BA4009D8BF2 /* SwiftWithFriends.xcdatamodeld */,
 				A515270127540D2800BFBA6F /* CoreDataModels */,
-				A51F399827531BA4009D8BF2 /* Assets.xcassets */,
 				A51F399A27531BA4009D8BF2 /* Preview Content */,
 			);
 			path = SwiftWithFriends;

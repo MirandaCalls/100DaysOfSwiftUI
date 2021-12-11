@@ -12,6 +12,7 @@
 		A51BF672276186EF00B53B8F /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51BF671276186EF00B53B8F /* EditView.swift */; };
 		A51BF67427618A1C00B53B8F /* WikipediaResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51BF67327618A1C00B53B8F /* WikipediaResult.swift */; };
 		A51BF6762762F25D00B53B8F /* MKPointAnnotation-Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51BF6752762F25D00B53B8F /* MKPointAnnotation-Codable.swift */; };
+		A54C643627644FC200031B70 /* BucketListMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C643527644FC200031B70 /* BucketListMapView.swift */; };
 		A5F0E585275D6B620050CA76 /* BucketListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F0E584275D6B620050CA76 /* BucketListApp.swift */; };
 		A5F0E587275D6B620050CA76 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F0E586275D6B620050CA76 /* ContentView.swift */; };
 		A5F0E589275D6B660050CA76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5F0E588275D6B660050CA76 /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 		A51BF671276186EF00B53B8F /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		A51BF67327618A1C00B53B8F /* WikipediaResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikipediaResult.swift; sourceTree = "<group>"; };
 		A51BF6752762F25D00B53B8F /* MKPointAnnotation-Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKPointAnnotation-Codable.swift"; sourceTree = "<group>"; };
+		A54C643527644FC200031B70 /* BucketListMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListMapView.swift; sourceTree = "<group>"; };
 		A5F0E581275D6B620050CA76 /* BucketList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BucketList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5F0E584275D6B620050CA76 /* BucketListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListApp.swift; sourceTree = "<group>"; };
 		A5F0E586275D6B620050CA76 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,11 +65,12 @@
 			children = (
 				A5F0E584275D6B620050CA76 /* BucketListApp.swift */,
 				A5F0E586275D6B620050CA76 /* ContentView.swift */,
+				A54C643527644FC200031B70 /* BucketListMapView.swift */,
+				A51BF671276186EF00B53B8F /* EditView.swift */,
+				A51BF67327618A1C00B53B8F /* WikipediaResult.swift */,
 				A50AB8EF2760567D005B796F /* MapView.swift */,
 				A51BF66F2761863100B53B8F /* MKPointAnnotation-ObservableObject.swift */,
 				A51BF6752762F25D00B53B8F /* MKPointAnnotation-Codable.swift */,
-				A51BF671276186EF00B53B8F /* EditView.swift */,
-				A51BF67327618A1C00B53B8F /* WikipediaResult.swift */,
 				A5F0E588275D6B660050CA76 /* Assets.xcassets */,
 				A5F0E58A275D6B660050CA76 /* Preview Content */,
 			);
@@ -157,6 +160,7 @@
 				A51BF672276186EF00B53B8F /* EditView.swift in Sources */,
 				A51BF67427618A1C00B53B8F /* WikipediaResult.swift in Sources */,
 				A51BF6702761863100B53B8F /* MKPointAnnotation-ObservableObject.swift in Sources */,
+				A54C643627644FC200031B70 /* BucketListMapView.swift in Sources */,
 				A50AB8F02760567D005B796F /* MapView.swift in Sources */,
 				A5F0E585275D6B620050CA76 /* BucketListApp.swift in Sources */,
 			);

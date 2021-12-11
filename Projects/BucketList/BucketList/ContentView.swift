@@ -6,49 +6,18 @@
 //
 
 import SwiftUI
-import MapKit
 import LocalAuthentication
 
 struct ContentView: View {
-    @State private var centerCoordinate = CLLocationCoordinate2D()
-    @State private var selectedPlace: MKPointAnnotation?
-    @State private var showingPlaceDetails = false
-    @State private var locations = [CodableMKPointAnnotation]()
-    @State private var showingEditScreen = false
     @State private var isUnlocked = false
+    
+    @State private var displayErrorSheet = false
+    @State private var displayedError = ""
     
     var body: some View {
         ZStack {
             if self.isUnlocked {
-                MapView(centerCoordinate: self.$centerCoordinate, selectedPlace: self.$selectedPlace, showingPlaceDetails: self.$showingPlaceDetails, annotations: locations)
-                    .edgesIgnoringSafeArea(.all)
-                Circle()
-                    .fill(Color.blue)
-                    .opacity(0.3)
-                    .frame(width: 32, height: 32)
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            let new_location = CodableMKPointAnnotation()
-                            new_location.title = "Example Location"
-                            new_location.coordinate = self.centerCoordinate
-                            self.locations.append(new_location)
-                            
-                            self.selectedPlace = new_location
-                            self.showingEditScreen = true
-                        }) {
-                            Image(systemName: "plus")
-                        }
-                        .padding()
-                        .background(Color.black.opacity(0.75))
-                        .foregroundColor(.white)
-                        .font(.title)
-                        .clipShape(Circle())
-                        .padding(.trailing)
-                    }
-                }
+                BucketListMapView()
             } else {
                 LinearGradient(colors: [.blue, .green], startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(.all)
@@ -73,31 +42,23 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    Button("Unlock Data") {
+                    Button(action: {
                         self.authenticate()
+                    }) {
+                        Text("Unlock Data")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .clipShape(Capsule())
+                            .padding([.leading, .trailing])
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .clipShape(Capsule())
-                    .padding([.leading, .trailing])
                 }
-
             }
         }
-        .alert(isPresented: self.$showingPlaceDetails) {
-            Alert(title: Text(selectedPlace?.title ?? "Unknown"), message: Text(selectedPlace?.subtitle ?? "Missing place information"), primaryButton: .default(Text("OK")), secondaryButton: .default(Text("Edit")) {
-                    self.showingEditScreen = true
-                }
-            )
+        .alert(isPresented: self.$displayErrorSheet) {
+            Alert(title: Text("Error"), message: Text(self.displayedError), dismissButton: .default(Text("OK")))
         }
-        .sheet(isPresented: self.$showingEditScreen, onDismiss: self.saveData) {
-            if self.selectedPlace != nil {
-                EditView(placemark: self.selectedPlace!)
-            }
-        }
-        .onAppear(perform: self.loadData)
     }
     
     func authenticate() {
@@ -112,38 +73,13 @@ struct ContentView: View {
                     if success {
                         self.isUnlocked = true
                     } else {
-                        // error
+                        self.displayErrorSheet = true
+                        self.displayedError = authenticationError?.localizedDescription ?? "Unknown error"
                     }
                 }
             }
         } else {
             // no biometrics
-        }
-    }
-    
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    
-    func loadData() {
-        let filename = self.getDocumentsDirectory().appendingPathComponent("SavedPlaces")
-        
-        do {
-            let data = try Data(contentsOf: filename)
-            self.locations = try JSONDecoder().decode([CodableMKPointAnnotation].self, from: data)
-        } catch {
-            print("Unable to load saved places")
-        }
-    }
-    
-    func saveData() {
-        do {
-            let filename = self.getDocumentsDirectory().appendingPathComponent("SavedPlaces")
-            let data = try JSONEncoder().encode(self.locations)
-            try data.write(to: filename, options: [.atomicWrite, .completeFileProtection])
-        } catch {
-            print("Unable to save data")
         }
     }
 }

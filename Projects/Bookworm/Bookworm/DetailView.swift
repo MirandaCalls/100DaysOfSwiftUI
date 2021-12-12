@@ -63,7 +63,7 @@ struct DetailView: View {
                     Text("REVIEW")
                         .font(.caption)
                         .fontWeight(.bold)
-                    if self.book.review == nil {
+                    if self.book.review == nil || self.book.review == "" {
                         HStack {
                             Spacer()
                             Text("No review")

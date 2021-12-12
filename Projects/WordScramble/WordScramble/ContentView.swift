@@ -41,6 +41,8 @@ struct ContentView: View {
                         Image(systemName: "\(word.count).circle")
                         Text(word)
                     }
+                    .accessibilityElement(children: .ignore)
+                    .accessibility(label: Text("\(word), \(word.count) letters"))
                 }
                 
                 TextField("Enter your word", text: $newWord, onCommit: addNewWord)

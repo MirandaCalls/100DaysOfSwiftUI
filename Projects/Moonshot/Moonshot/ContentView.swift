@@ -19,6 +19,7 @@ struct ContentView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 44, height: 44)
+                        .accessibility(hidden: true)
                     
                     VStack(alignment: .leading) {
                         Text(mission.displayName)

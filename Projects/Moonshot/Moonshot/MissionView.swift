@@ -44,6 +44,8 @@ struct MissionView: View {
                             .scaledToFit()
                             .frame(width: geo.size.width * 0.7)
                             .padding(.top)
+                            .accessibility(label: Text(mission.displayName))
+                            
                         
                         VStack {
                             Text("LAUNCHED")
@@ -53,6 +55,8 @@ struct MissionView: View {
                                 .fontWeight(.bold)
                         }
                         .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                        .accessibilityElement(children: .ignore)
+                        .accessibility(label: Text("Launched \(self.mission.formattedLaunchDate)"))
                     }
                     
                     Text(self.mission.description)

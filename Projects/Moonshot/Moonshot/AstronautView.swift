@@ -34,6 +34,7 @@ struct AstronautView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: geo.size.width)
+                        .accessibility(label: Text(astronaut.name))
                     
                     Text(self.astronaut.description)
                         .padding()
@@ -48,9 +49,12 @@ struct AstronautView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 60, height: 60)
+                                    .accessibility(label: Text(mission.displayName))
+                                    .accessibility(removeTraits: .isImage)
                             }
                         }
                     }
+                    .accessibilityElement(children: .combine)
                 }
             }
         }

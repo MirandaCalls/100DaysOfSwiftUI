@@ -40,6 +40,8 @@ struct ContentView: View {
                         Stepper(value: $sleepAmount, in: 4...12, step: 0.25) {
                             Text("\(sleepAmount, specifier: "%G") hours")
                         }
+                        .accessibilityElement(children: .combine)
+                        .accessibility(value: Text("\(sleepAmount, specifier: "%G") hours"))
                     }
                     
                     VStack(alignment: .leading, spacing: 0) {
@@ -71,6 +73,8 @@ struct ContentView: View {
                     }
                 }
                 .padding(5)
+                .accessibilityElement(children: .ignore)
+                .accessibility(label: Text("Your ideal bedtime is \(bedtime)"))
             }
             .navigationBarTitle("BetterRest")
         }

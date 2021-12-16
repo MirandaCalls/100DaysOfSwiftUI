@@ -25,7 +25,10 @@ struct ContentView: View {
             ScrollView {
                 LazyVGrid(columns: layout, spacing: 10) {
                     ForEach(self.contacts, id: \.self) { contact in
-                        ContactLinkView(contact: contact)
+                        NavigationLink(destination: ContactDetailView(contact: contact)) {
+                            ContactLinkView(contact: contact)
+                        }
+                        .foregroundColor(.black)
                     }
                 }
                 .padding(.horizontal)

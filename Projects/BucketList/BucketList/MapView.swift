@@ -17,6 +17,7 @@ struct MapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let map_view = MKMapView()
         map_view.delegate = context.coordinator
+        map_view.centerCoordinate = self.centerCoordinate
         return map_view
     }
     

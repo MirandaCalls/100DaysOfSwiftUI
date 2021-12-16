@@ -17,8 +17,11 @@
 		A58C7F74276997360064F3B5 /* FileManager-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58C7F73276997360064F3B5 /* FileManager-Extensions.swift */; };
 		A58C7F772769992C0064F3B5 /* ContactsModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A58C7F752769992C0064F3B5 /* ContactsModel.xcdatamodeld */; };
 		A58C7F79276999C00064F3B5 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58C7F78276999C00064F3B5 /* Persistence.swift */; };
-		A58C7F7C27699B9B0064F3B5 /* Contact+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58C7F7A27699B9B0064F3B5 /* Contact+CoreDataClass.swift */; };
-		A58C7F7D27699B9B0064F3B5 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58C7F7B27699B9B0064F3B5 /* Contact+CoreDataProperties.swift */; };
+		A5C7F23E276ADF7B00F6ECFB /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F23D276ADF7B00F6ECFB /* LocationFetcher.swift */; };
+		A5E919F9276AE9B200C48088 /* Contact+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E919F7276AE9B200C48088 /* Contact+CoreDataClass.swift */; };
+		A5E919FA276AE9B200C48088 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E919F8276AE9B200C48088 /* Contact+CoreDataProperties.swift */; };
+		A5E919FC276AEADB00C48088 /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E919FB276AEADB00C48088 /* ContactDetailView.swift */; };
+		A5E919FE276AEDCC00C48088 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E919FD276AEDCC00C48088 /* MapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,8 +36,11 @@
 		A58C7F73276997360064F3B5 /* FileManager-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager-Extensions.swift"; sourceTree = "<group>"; };
 		A58C7F762769992C0064F3B5 /* ContactsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContactsModel.xcdatamodel; sourceTree = "<group>"; };
 		A58C7F78276999C00064F3B5 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		A58C7F7A27699B9B0064F3B5 /* Contact+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataClass.swift"; sourceTree = "<group>"; };
-		A58C7F7B27699B9B0064F3B5 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A5C7F23D276ADF7B00F6ECFB /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
+		A5E919F7276AE9B200C48088 /* Contact+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataClass.swift"; sourceTree = "<group>"; };
+		A5E919F8276AE9B200C48088 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A5E919FB276AEADB00C48088 /* ContactDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailView.swift; sourceTree = "<group>"; };
+		A5E919FD276AEDCC00C48088 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = ../../BucketList/BucketList/MapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,13 +75,16 @@
 			children = (
 				A58C7F5B2769801D0064F3B5 /* MeetupBuddyApp.swift */,
 				A58C7F5D2769801D0064F3B5 /* ContentView.swift */,
-				A58C7F7127698E4E0064F3B5 /* ContactAddView.swift */,
 				A58C7F6F27698DD40064F3B5 /* ContactLinkView.swift */,
+				A58C7F7127698E4E0064F3B5 /* ContactAddView.swift */,
+				A5E919FB276AEADB00C48088 /* ContactDetailView.swift */,
 				A58C7F692769808A0064F3B5 /* ImagePicker.swift */,
+				A5E919FD276AEDCC00C48088 /* MapView.swift */,
 				A58C7F73276997360064F3B5 /* FileManager-Extensions.swift */,
+				A5C7F23D276ADF7B00F6ECFB /* LocationFetcher.swift */,
 				A58C7F78276999C00064F3B5 /* Persistence.swift */,
-				A58C7F7A27699B9B0064F3B5 /* Contact+CoreDataClass.swift */,
-				A58C7F7B27699B9B0064F3B5 /* Contact+CoreDataProperties.swift */,
+				A5E919F7276AE9B200C48088 /* Contact+CoreDataClass.swift */,
+				A5E919F8276AE9B200C48088 /* Contact+CoreDataProperties.swift */,
 				A58C7F752769992C0064F3B5 /* ContactsModel.xcdatamodeld */,
 				A58C7F5F2769801F0064F3B5 /* Assets.xcassets */,
 				A58C7F612769801F0064F3B5 /* Preview Content */,
@@ -161,15 +170,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5E919FC276AEADB00C48088 /* ContactDetailView.swift in Sources */,
 				A58C7F74276997360064F3B5 /* FileManager-Extensions.swift in Sources */,
 				A58C7F79276999C00064F3B5 /* Persistence.swift in Sources */,
 				A58C7F772769992C0064F3B5 /* ContactsModel.xcdatamodeld in Sources */,
+				A5E919FE276AEDCC00C48088 /* MapView.swift in Sources */,
 				A58C7F7227698E4E0064F3B5 /* ContactAddView.swift in Sources */,
-				A58C7F7C27699B9B0064F3B5 /* Contact+CoreDataClass.swift in Sources */,
+				A5E919F9276AE9B200C48088 /* Contact+CoreDataClass.swift in Sources */,
+				A5C7F23E276ADF7B00F6ECFB /* LocationFetcher.swift in Sources */,
+				A5E919FA276AE9B200C48088 /* Contact+CoreDataProperties.swift in Sources */,
 				A58C7F6A2769808A0064F3B5 /* ImagePicker.swift in Sources */,
 				A58C7F7027698DD40064F3B5 /* ContactLinkView.swift in Sources */,
 				A58C7F5E2769801D0064F3B5 /* ContentView.swift in Sources */,
-				A58C7F7D27699B9B0064F3B5 /* Contact+CoreDataProperties.swift in Sources */,
 				A58C7F5C2769801D0064F3B5 /* MeetupBuddyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,6 +316,7 @@
 				DEVELOPMENT_TEAM = UG72X5W583;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Use your location to save where you met your contacts.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Use images from your photo library for contacts.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -334,6 +347,7 @@
 				DEVELOPMENT_TEAM = UG72X5W583;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Use your location to save where you met your contacts.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Use images from your photo library for contacts.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

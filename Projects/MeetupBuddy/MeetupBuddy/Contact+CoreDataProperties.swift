@@ -2,13 +2,13 @@
 //  Contact+CoreDataProperties.swift
 //  MeetupBuddy
 //
-//  Created by Geoffrie Maiden Mueller on 12/14/21.
+//  Created by Geoffrie Maiden Mueller on 12/15/21.
 //
 //
 
 import Foundation
 import CoreData
-
+import MapKit
 
 extension Contact {
 
@@ -18,7 +18,10 @@ extension Contact {
 
     @NSManaged public var id: UUID?
     @NSManaged public var imageName: String?
+    @NSManaged public var latitude: Double
+    @NSManaged public var longitude: Double
     @NSManaged public var name: String?
+    @NSManaged public var savedLocation: Bool
 
     var wrappedName: String {
         self.name ?? "Unknown name"
@@ -30,6 +33,13 @@ extension Contact {
     
     var imageUrl: URL {
         return FileManager.default.getDocumentsDirectory().appendingPathComponent(self.wrappedImageName)
+    }
+    
+    var contactLocation: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(
+            latitude: self.latitude,
+            longitude: self.longitude
+        )
     }
     
 }

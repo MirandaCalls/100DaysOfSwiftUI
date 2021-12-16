@@ -14,15 +14,13 @@ struct ContactLinkView: View {
         VStack {
             VStack {
                 AsyncImage(url: self.contact.imageUrl) { image in
-                    image.resizable()
+                    image.resizable().scaledToFit()
                 } placeholder: {
                     ProgressView()
                 }
-                .frame(width: 120, height: 120)
-                .clipShape(Circle())
+                .frame(maxHeight: 120)
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical)
             .background(Color(red: 191 / 255, green: 191 / 255, blue: 191 / 255))
             
             Text(self.contact.wrappedName)

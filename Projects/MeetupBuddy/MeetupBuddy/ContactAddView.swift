@@ -7,10 +7,13 @@
 
 import SwiftUI
 import CoreData
+import CoreLocation
 
 struct ContactAddView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
+    
+    let locationFetcher = LocationFetcher()
     
     var saveDisabled: Bool {
         self.contactName == ""
@@ -19,11 +22,12 @@ struct ContactAddView: View {
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
     @State private var contactName = ""
+    @State private var saveLocation = true
     
     var body: some View {
         NavigationView {
             Form {
-                Section {
+                Section(header: Text("Contact Details")) {
                     if self.inputImage != nil {
                         Image(uiImage: self.inputImage!)
                             .resizable()
@@ -45,6 +49,10 @@ struct ContactAddView: View {
                     TextField("Name", text: self.$contactName)
                 }
 
+                Section(header: Text("Current Location")) {
+                    Toggle("Save location", isOn: self.$saveLocation)
+                }
+                
                 Button("Save") {
                     // Save the contact and dismiss the sheet
                     self.saveContact()
@@ -54,6 +62,9 @@ struct ContactAddView: View {
             .navigationBarTitle("Add New Contact")
             .sheet(isPresented: self.$showingImagePicker) {
                 ImagePicker(image: self.$inputImage)
+            }
+            .onAppear {
+                self.locationFetcher.start()
             }
         }
     }
@@ -78,6 +89,16 @@ struct ContactAddView: View {
         let new_contact = Contact(context: self.moc)
         new_contact.name = self.contactName
         new_contact.imageName = image_id
+        new_contact.savedLocation = false
+        
+        if self.saveLocation {
+            if let location = self.locationFetcher.lastKnownLocation {
+                new_contact.savedLocation = true
+                new_contact.latitude = location.latitude
+                new_contact.longitude = location.longitude
+            }
+        }
+        
         try? self.moc.save()
         
         self.presentationMode.wrappedValue.dismiss()

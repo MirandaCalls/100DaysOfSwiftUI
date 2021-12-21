@@ -11,7 +11,7 @@ class Prospect: Identifiable, Codable {
     var id = UUID()
     var name = "Anonymous"
     var emailAddress = ""
-    var isContacted = false
+    fileprivate(set) var isContacted = false
 }
 
 class Prospects: ObservableObject {
@@ -19,5 +19,13 @@ class Prospects: ObservableObject {
     
     init() {
         self.people = []
+    }
+    
+    func toggle(_ prospect: Prospect) {
+        // Always call this function first, before changing any values
+        // So that SwiftUI will get the animations correct
+        objectWillChange.send()
+        
+        prospect.isContacted.toggle()
     }
 }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CodeScanner
+import UserNotifications
 
 struct ProspectsView: View {
     @EnvironmentObject var prospects: Prospects
@@ -53,6 +54,12 @@ struct ProspectsView: View {
                         Button(prospect.isContacted ? "Mark Uncontacted" : "Mark Contacted") {
                             self.prospects.toggle(prospect)
                         }
+                        
+                        if !prospect.isContacted {
+                            Button("Remind Me") {
+                                self.addNotification(for: prospect)
+                            }
+                        }
                     }
                 }
             }
@@ -80,9 +87,47 @@ struct ProspectsView: View {
             let person = Prospect()
             person.name = details[0]
             person.emailAddress = details[1]
-            self.prospects.people.append(person)
+            
+            self.prospects.add(person)
         case .failure(_):
             print("Scanning failed")
+        }
+    }
+    
+    func addNotification(for prospect: Prospect) {
+        let center = UNUserNotificationCenter.current()
+        
+        let add_request = {
+            let content = UNMutableNotificationContent()
+            content.title = "Contact \(prospect.name)"
+            content.subtitle = prospect.emailAddress
+            content.sound = UNNotificationSound.default
+            
+            // Runs different code when in the simulator
+            #if targetEnvironment(simulator)
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            #else
+                var date_components = DateComponents()
+                date_components.hour = 9
+                let trigger = UNCalendarNotificationTrigger(dateMatching: date_components, repeats: false)
+            #endif
+            
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            center.add(request)
+        }
+        
+        center.getNotificationSettings { settings in
+            if settings.authorizationStatus == .authorized {
+                add_request()
+            } else {
+                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    if success {
+                        add_request()
+                    } else {
+                        print("Failed to get required notification permissions.")
+                    }
+                }
+            }
         }
     }
 }

@@ -10,13 +10,21 @@ import CodeScanner
 import UserNotifications
 
 struct ProspectsView: View {
-    @EnvironmentObject var prospects: Prospects
-    @State private var isShowingScanner = false
-    
     enum FilterType {
         case none, contacted, uncontacted
     }
     
+    enum SortBy {
+        case name, dateAdded
+    }
+    
+    @EnvironmentObject var prospects: Prospects
+    @State private var isShowingScanner = false
+    @State private var showingFilterActionSheet = false
+    @State private var sortOrder: SortBy = .name
+    
+    let filter: FilterType
+
     var title: String {
         switch self.filter {
         case .none:
@@ -28,15 +36,33 @@ struct ProspectsView: View {
         }
     }
     
-    let filter: FilterType
+    var sortByLabel: String {
+        switch self.sortOrder {
+        case .name:
+            return "Name"
+        case.dateAdded:
+            return "Date Added"
+        }
+    }
+    
     var filteredProspects: [Prospect] {
+        var prospects: [Prospect]
+        
         switch self.filter {
         case .none:
-            return self.prospects.people
+            prospects = self.prospects.people
         case .contacted:
-            return self.prospects.people.filter { $0.isContacted }
+            prospects = self.prospects.people.filter { $0.isContacted }
         case .uncontacted:
-            return self.prospects.people.filter { !$0.isContacted }
+            prospects = self.prospects.people.filter { !$0.isContacted }
+        }
+        
+        return prospects.sorted {
+            if self.sortOrder == .name {
+                return $0.name < $1.name
+            } else {
+                return $0.dateAdded < $1.dateAdded
+            }
         }
     }
     
@@ -44,11 +70,18 @@ struct ProspectsView: View {
         NavigationView {
             List {
                 ForEach(self.filteredProspects) { prospect in
-                    VStack(alignment: .leading) {
-                        Text(prospect.name)
-                            .font(.headline)
-                        Text(prospect.emailAddress)
-                            .foregroundColor(.secondary)
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(prospect.name)
+                                .font(.headline)
+                            Text(prospect.emailAddress)
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        Spacer()
+                        if prospect.isContacted && self.filter == .none {
+                            Image(systemName: "checkmark.circle.fill")
+                        }
                     }
                     .contextMenu {
                         Button(prospect.isContacted ? "Mark Uncontacted" : "Mark Contacted") {
@@ -64,15 +97,29 @@ struct ProspectsView: View {
                 }
             }
             .navigationBarTitle(self.title)
-            .navigationBarItems(trailing: Button(action: {
-                self.isShowingScanner = true
-            }) {
-                Image(systemName: "qrcode.viewfinder")
-                Text("Scan")
-            })
+            .navigationBarItems(
+                leading: Button(action: {
+                    self.showingFilterActionSheet = true
+                }) {
+                    Image(systemName: "arrow.down.circle.fill")
+                    Text("\(self.sortByLabel)")
+                },
+                trailing: Button(action: {
+                    self.isShowingScanner = true
+                }) {
+                    Image(systemName: "qrcode.viewfinder")
+                    Text("Scan")
+                })
         }
         .sheet(isPresented: self.$isShowingScanner) {
-            CodeScannerView(codeTypes: [.qr], simulatedData: "Tim Cook\ncoolemail@apple.com", completion: self.handleScan)
+            CodeScannerView(codeTypes: [.qr], simulatedData: "Kathryn Janeway\ncoffee@inthatnebula.com", completion: self.handleScan)
+        }
+        .actionSheet(isPresented: self.$showingFilterActionSheet) {
+            ActionSheet(title: Text("Change Sort Order"), message: Text("Select value to sort by"), buttons: [
+                .default(Text("Name")) { self.sortOrder = .name },
+                .default(Text("Date Added")) { self.sortOrder = .dateAdded },
+                .cancel()
+            ])
         }
     }
     
@@ -87,6 +134,7 @@ struct ProspectsView: View {
             let person = Prospect()
             person.name = details[0]
             person.emailAddress = details[1]
+            person.dateAdded = Date()
             
             self.prospects.add(person)
         case .failure(_):

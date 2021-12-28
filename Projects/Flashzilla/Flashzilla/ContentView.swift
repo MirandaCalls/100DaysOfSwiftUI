@@ -9,16 +9,19 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
+    @Environment(\.accessibilityEnabled) var accessibilityEnabled
     
-    @State private var cards = [Card](repeating: Card.example, count: 10)
+    @State private var cards = [Card]()
     
     @State private var isActive = true
     @State private var timeRemaining = 100
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
+    @State private var showingEditScreen = false
+    
     var body: some View {
         ZStack {
-            Image("background")
+            Image(decorative: "background")
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
@@ -39,10 +42,12 @@ struct ContentView: View {
                     ForEach(0..<cards.count, id: \.self) { index in
                         CardView(card: self.cards[index]) {
                             withAnimation {
-                                self.removeCards(at: index)
+                                self.removeCard(at: index)
                             }
                         }
                         .stacked(at: index, in: self.cards.count)
+                        .allowsHitTesting(index == self.cards.count - 1)
+                        .accessibility(hidden: index < self.cards.count - 1)
                     }
                 }
                 .allowsHitTesting(self.timeRemaining > 0)
@@ -56,20 +61,54 @@ struct ContentView: View {
                 }
             }
             
-            if differentiateWithoutColor {
+            VStack {
+                HStack {
+                    Spacer()
+                    
+                    Button(action: {
+                        self.showingEditScreen = true
+                    }) {
+                        Image(systemName: "plus.circle")
+                            .padding()
+                            .background(.black.opacity(0.7))
+                            .clipShape(Circle())
+                    }
+                }
+                
+                Spacer()
+            }
+            .foregroundColor(.white)
+            .font(.largeTitle)
+            .padding()
+            
+            if self.differentiateWithoutColor || self.accessibilityEnabled {
                 VStack {
                     Spacer()
                     
                     HStack {
-                        Image(systemName: "xmark.circle")
-                            .padding()
-                            .background(Color.black.opacity(0.7))
-                            .clipShape(Circle())
+                        Button(action: {
+                            self.removeCard(at: self.cards.count - 1)
+                        }) {
+                            Image(systemName: "xmark.circle")
+                                .padding()
+                                .background(Color.black.opacity(0.7))
+                                .clipShape(Circle())
+                        }
+                        .accessibility(label: Text("Wrong"))
+                        .accessibility(hint: Text("Mark your answer as being incorrect."))
+                        
                         Spacer()
-                        Image(systemName: "checkmark.circle")
-                            .padding()
-                            .background(Color.black.opacity(0.7))
-                            .clipShape(Circle())
+                        
+                        Button(action: {
+                            self.removeCard(at: self.cards.count - 1)
+                        }) {
+                            Image(systemName: "checkmark.circle")
+                                .padding()
+                                .background(Color.black.opacity(0.7))
+                                .clipShape(Circle())
+                        }
+                        .accessibility(label: Text("Correct"))
+                        .accessibility(hint: Text("Mark your answer as being correct."))
                     }
                     .foregroundColor(.white)
                     .font(.title)
@@ -94,9 +133,15 @@ struct ContentView: View {
             
             self.isActive = true
         }
+        .sheet(isPresented: self.$showingEditScreen, onDismiss: self.resetCards) {
+            EditCardsView()
+        }
+        .onAppear(perform: self.resetCards)
     }
     
-    func removeCards(at index: Int) {
+    func removeCard(at index: Int) {
+        guard index >= 0 else { return }
+        
         cards.remove(at: index)
         
         if self.cards.isEmpty {
@@ -105,9 +150,17 @@ struct ContentView: View {
     }
     
     func resetCards() {
-        self.cards = [Card](repeating: Card.example, count: 10)
+        self.loadData()
         self.timeRemaining = 100
         self.isActive = true
+    }
+    
+    func loadData() {
+        if let data = UserDefaults.standard.data(forKey: "Cards") {
+            if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
+                self.cards = decoded
+            }
+        }
     }
 }
 

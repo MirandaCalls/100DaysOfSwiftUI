@@ -14,6 +14,9 @@
 		A5774560277828CD00348FCE /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = A577455F277828CD00348FCE /* Card.swift */; };
 		A5774562277829F100348FCE /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5774561277829F100348FCE /* CardView.swift */; };
 		A5774564277AC59500348FCE /* EditCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5774563277AC59500348FCE /* EditCardsView.swift */; };
+		A5B01E68277BE202008C2746 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B01E67277BE202008C2746 /* SettingsView.swift */; };
+		A5B01E6B277C012F008C2746 /* Subsonic in Frameworks */ = {isa = PBXBuildFile; productRef = A5B01E6A277C012F008C2746 /* Subsonic */; };
+		A5B01E6D277C017A008C2746 /* gameover.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A5B01E6C277C017A008C2746 /* gameover.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +28,8 @@
 		A577455F277828CD00348FCE /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		A5774561277829F100348FCE /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		A5774563277AC59500348FCE /* EditCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardsView.swift; sourceTree = "<group>"; };
+		A5B01E67277BE202008C2746 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A5B01E6C277C017A008C2746 /* gameover.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameover.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5B01E6B277C012F008C2746 /* Subsonic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +68,8 @@
 				A5774561277829F100348FCE /* CardView.swift */,
 				A577455F277828CD00348FCE /* Card.swift */,
 				A5774563277AC59500348FCE /* EditCardsView.swift */,
+				A5B01E67277BE202008C2746 /* SettingsView.swift */,
+				A5B01E6C277C017A008C2746 /* gameover.mp3 */,
 				A577455527757D1C00348FCE /* Assets.xcassets */,
 				A577455727757D1C00348FCE /* Preview Content */,
 			);
@@ -92,6 +100,9 @@
 			dependencies = (
 			);
 			name = Flashzilla;
+			packageProductDependencies = (
+				A5B01E6A277C012F008C2746 /* Subsonic */,
+			);
 			productName = Flashzilla;
 			productReference = A577454E27757D1A00348FCE /* Flashzilla.app */;
 			productType = "com.apple.product-type.application";
@@ -120,6 +131,9 @@
 				Base,
 			);
 			mainGroup = A577454527757D1A00348FCE;
+			packageReferences = (
+				A5B01E69277C012F008C2746 /* XCRemoteSwiftPackageReference "Subsonic" */,
+			);
 			productRefGroup = A577454F27757D1A00348FCE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -136,6 +150,7 @@
 			files = (
 				A577455927757D1C00348FCE /* Preview Assets.xcassets in Resources */,
 				A577455627757D1C00348FCE /* Assets.xcassets in Resources */,
+				A5B01E6D277C017A008C2746 /* gameover.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +164,7 @@
 				A577455427757D1A00348FCE /* ContentView.swift in Sources */,
 				A5774560277828CD00348FCE /* Card.swift in Sources */,
 				A5774562277829F100348FCE /* CardView.swift in Sources */,
+				A5B01E68277BE202008C2746 /* SettingsView.swift in Sources */,
 				A5774564277AC59500348FCE /* EditCardsView.swift in Sources */,
 				A577455227757D1A00348FCE /* FlashzillaApp.swift in Sources */,
 			);
@@ -355,6 +371,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A5B01E69277C012F008C2746 /* XCRemoteSwiftPackageReference "Subsonic" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/Subsonic";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A5B01E6A277C012F008C2746 /* Subsonic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5B01E69277C012F008C2746 /* XCRemoteSwiftPackageReference "Subsonic" */;
+			productName = Subsonic;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A577454627757D1A00348FCE /* Project object */;
 }

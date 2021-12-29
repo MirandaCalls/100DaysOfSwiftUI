@@ -11,7 +11,7 @@ struct CardView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.accessibilityEnabled) var accessibilityEnabled
     let card: Card
-    var removal: (() -> Void)? = nil
+    var removal: ((Bool) -> Void)? = nil
     
     @State private var isShowingAnswer = false
     @State private var offset = CGSize.zero
@@ -27,7 +27,7 @@ struct CardView: View {
                 .background(
                     self.differentiateWithoutColor ? nil : 
                     RoundedRectangle(cornerRadius: 25, style: .continuous)
-                        .fill(offset.width > 0 ? Color.green : Color.red)
+                        .answerColorShift(offset: self.offset)
                 )
                 .shadow(radius: 10)
             
@@ -64,13 +64,16 @@ struct CardView: View {
                 }
                 .onEnded { _ in
                     if abs(self.offset.width) > 100 {
+                        var success: Bool
                         if self.offset.width > 0 {
                             self.feedback.notificationOccurred(.success)
+                            success = true
                         } else {
                             self.feedback.notificationOccurred(.error)
+                            success = false
                         }
                         
-                        self.removal?()
+                        self.removal?(success)
                     } else {
                         self.offset = .zero
                     }
@@ -80,6 +83,18 @@ struct CardView: View {
             self.isShowingAnswer.toggle()
         }
         .animation(.spring())
+    }
+}
+
+extension RoundedRectangle {
+    func answerColorShift(offset: CGSize) -> some View {
+        if offset.width > 0 {
+            return AnyView(self.fill(Color.green))
+        } else if offset.width < 0 {
+            return AnyView(self.fill(Color.red))
+        }
+        
+        return AnyView(self)
     }
 }
 

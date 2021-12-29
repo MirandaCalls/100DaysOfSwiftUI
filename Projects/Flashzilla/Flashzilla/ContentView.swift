@@ -6,18 +6,21 @@
 //
 
 import SwiftUI
+import Subsonic
 
 struct ContentView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.accessibilityEnabled) var accessibilityEnabled
     
     @State private var cards = [Card]()
+    @State private var reshuffleFailures = false
     
     @State private var isActive = true
     @State private var timeRemaining = 100
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @State private var showingEditScreen = false
+    @State private var showingSettingsScreen = false
     
     var body: some View {
         ZStack {
@@ -38,21 +41,45 @@ struct ContentView: View {
                             .opacity(0.75)
                     )
                 
-                ZStack {
-                    ForEach(0..<cards.count, id: \.self) { index in
-                        CardView(card: self.cards[index]) {
-                            withAnimation {
-                                self.removeCard(at: index)
+                if self.timeRemaining > 0 {
+                    ZStack {
+                        ForEach(0..<cards.count, id: \.self) { index in
+                            CardView(card: self.cards[index]) { success in
+                                withAnimation {
+                                    self.removeCard(at: index, success: success)
+                                }
                             }
+                            .stacked(at: index, in: self.cards.count)
+                            .allowsHitTesting(index == self.cards.count - 1)
+                            .accessibility(hidden: index < self.cards.count - 1)
                         }
-                        .stacked(at: index, in: self.cards.count)
-                        .allowsHitTesting(index == self.cards.count - 1)
-                        .accessibility(hidden: index < self.cards.count - 1)
                     }
+                    .allowsHitTesting(self.timeRemaining > 0)
                 }
-                .allowsHitTesting(self.timeRemaining > 0)
                 
-                if self.cards.isEmpty {
+                if self.cards.isEmpty || self.timeRemaining == 0 {
+                    if !self.cards.isEmpty {
+                        ZStack(alignment: .bottom) {
+                            Image("hudsonaliens")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 400)
+                                .cornerRadius(10)
+                            
+                            Text("Remaining cards: \(self.cards.count)")
+                                .font(.title2)
+                                .padding(5)
+                                .foregroundColor(.white)
+                                .background(.black.opacity(0.75))
+                                .cornerRadius(10)
+                                .padding(.bottom, 5)
+                        }
+                        .transition(.slide)
+                        .onAppear {
+                            play(sound: "gameover.mp3")
+                        }
+                    }
+                    
                     Button("Start Again", action: self.resetCards)
                         .padding()
                         .background(.white)
@@ -73,6 +100,15 @@ struct ContentView: View {
                             .background(.black.opacity(0.7))
                             .clipShape(Circle())
                     }
+                    
+                    Button(action: {
+                        self.showingSettingsScreen = true
+                    }) {
+                        Image(systemName: "gear")
+                            .padding()
+                            .background(.black.opacity(0.7))
+                            .clipShape(Circle())
+                    }
                 }
                 
                 Spacer()
@@ -87,7 +123,7 @@ struct ContentView: View {
                     
                     HStack {
                         Button(action: {
-                            self.removeCard(at: self.cards.count - 1)
+                            self.removeCard(at: self.cards.count - 1, success: false)
                         }) {
                             Image(systemName: "xmark.circle")
                                 .padding()
@@ -100,7 +136,7 @@ struct ContentView: View {
                         Spacer()
                         
                         Button(action: {
-                            self.removeCard(at: self.cards.count - 1)
+                            self.removeCard(at: self.cards.count - 1, success: true)
                         }) {
                             Image(systemName: "checkmark.circle")
                                 .padding()
@@ -120,7 +156,9 @@ struct ContentView: View {
             guard self.isActive else { return }
             
             if self.timeRemaining > 0 {
-                self.timeRemaining -= 1
+                withAnimation {
+                    self.timeRemaining -= 1
+                }
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
@@ -136,26 +174,44 @@ struct ContentView: View {
         .sheet(isPresented: self.$showingEditScreen, onDismiss: self.resetCards) {
             EditCardsView()
         }
+        .sheet(isPresented: self.$showingSettingsScreen, onDismiss: self.resetCards) {
+            SettingsView()
+        }
         .onAppear(perform: self.resetCards)
     }
     
-    func removeCard(at index: Int) {
+    func removeCard(at index: Int, success: Bool) {
         guard index >= 0 else { return }
         
-        cards.remove(at: index)
+        let removed_card = self.cards[index]
+        self.cards.remove(at: index)
         
-        if self.cards.isEmpty {
+        var reinserted_card = false
+        if self.reshuffleFailures && success == false {
+            reinserted_card = true
+            
+            // Got stuck with my interface freezing up when inserting the removed card to the back of the list
+            // This seems to be the only solution I can find
+            // https://www.hackingwithswift.com/forums/100-days-of-swiftui/day-91-flashzilla-challenges-can-t-seem-to-readd-a-card-successfully/2037
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.cards.insert(removed_card, at: 0)
+            }
+        }
+        
+        if self.cards.isEmpty && reinserted_card == false {
             self.isActive = false
         }
     }
     
     func resetCards() {
         self.loadData()
-        self.timeRemaining = 100
+        self.timeRemaining = 10
         self.isActive = true
     }
     
     func loadData() {
+        self.reshuffleFailures = UserDefaults.standard.bool(forKey: "reshuffleFailures")
+        
         if let data = UserDefaults.standard.data(forKey: "Cards") {
             if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
                 self.cards = decoded

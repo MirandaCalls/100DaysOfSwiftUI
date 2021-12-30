@@ -73,7 +73,7 @@ struct AlignmentDemo: View {
 extension VerticalAlignment {
     enum MidAccountAndName: AlignmentID {
         static func defaultValue(in d: ViewDimensions) -> CGFloat {
-            // By default align all elements to top of the parent view
+            // By default align elements using their top edge
             d[.top]
         }
     }
@@ -87,7 +87,7 @@ struct CustomAlignmentGuideDemo: View {
             VStack {
                 Text("@genshinmemes")
                     .alignmentGuide(.midAccountAndName) { d in
-                        // Make sure this element is at the center line of the view
+                        // Use the center line of this view to align with other views
                         d[VerticalAlignment.center]
                     }
                 Image("LanternFestival")
@@ -99,7 +99,7 @@ struct CustomAlignmentGuideDemo: View {
                 Text("Full name:")
                 Text("GENSHIN MEMES")
                     .alignmentGuide(.midAccountAndName) { d in
-                        // Make sure this element is at the center line, just like the @genshinmemes text
+                        // Make sure this element uses it's center line, just like the @genshinmemes text
                         d[VerticalAlignment.center]
                     }
                     .font(.largeTitle)

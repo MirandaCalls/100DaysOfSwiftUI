@@ -11,7 +11,12 @@ struct ContentView: View {
     var body: some View {
         // LayoutNotesDemo()
         // AlignmentDemo()
-        CustomAlignmentGuideDemo()
+        // CustomAlignmentGuideDemo()
+        // PositionModifiersDemo()
+        // GeometryReaderBasicsDemo()
+        // CoordinateSpacesDemo()
+        // ScrollViewEffectsDemo()
+        TaylorSwiftAlbumShowcase()
     }
 }
 
@@ -104,6 +109,140 @@ struct CustomAlignmentGuideDemo: View {
                     }
                     .font(.largeTitle)
             }
+        }
+    }
+}
+
+struct PositionModifiersDemo: View {
+    var body: some View {
+        VStack {
+            Text("Hello, world!")
+                // .position returns a view that takes up all available space,
+                // so that it can position the text wherever it wants to be placed.
+                .position(x: 100, y: 100)
+                // The color takes up whatever space the position view is taking up.
+                // If placed before position, it would only take up the space the text takes up
+                .background(.red)
+                .frame(width: 300, height: 300)
+            
+            Text("Hello, world!")
+                // Offset does not modify the original geometry, just repositions the view
+                // to the specified location.
+                .offset(x: 100, y: 100)
+                // Red is rendered wherever the text used to be
+                .background(.red)
+        }
+    }
+}
+
+struct GeometryReaderBasicsDemo: View {
+    var body: some View {
+        VStack {
+            GeometryReader { geo in
+                Text("Hello, world!")
+                    // Takes up 90% of the space GeometryReader was given to work with
+                    .frame(width: geo.size.width * 0.9)
+                    .background(.red)
+            }
+            .background(.green)
+            
+            // Pushed to bottom since Geometry reader takes up all available space
+            Text("More text")
+                .background(.blue)
+        }
+    }
+}
+
+struct OuterView: View {
+    var body: some View {
+        VStack {
+            Text("Top")
+            InnerView()
+                .background(.green)
+            Text("Bottom")
+        }
+    }
+}
+
+struct InnerView: View {
+    var body: some View {
+        HStack {
+            Text("Left")
+            GeometryReader { geo in
+                Text("Center")
+                    .background(.blue)
+                    .onTapGesture {
+                        // Reads the middle X/Y position in regards to the whole screen
+                        print("Global center: \(geo.frame(in: .global).midX) x \(geo.frame(in: .global).midY)")
+                        // X/Y position in regards to the bounds of OuterView
+                        print("Custom center: \(geo.frame(in: .named("Custom")).midX) x \(geo.frame(in: .named("Custom")).midY)")
+                        // X/Y position in regards to the closest parent, in this case, GeometryReader
+                        print("Local center: \(geo.frame(in: .local).midX) x \(geo.frame(in: .local).midY)")
+                    }
+            }
+            .background(.orange)
+            Text("Right")
+        }
+    }
+}
+
+struct CoordinateSpacesDemo: View {
+    var body: some View {
+        OuterView()
+            .background(.red)
+            // Defines a coordinate area named "Custom" that is defined by the bounds
+            // of OuterView
+            .coordinateSpace(name: "Custom")
+    }
+}
+
+struct ScrollViewEffectsDemo: View {
+    let colors: [Color] = [.red, .green, .blue, .orange, .pink, .purple, .yellow]
+    
+    var body: some View {
+        GeometryReader { fullView in
+            ScrollView(.vertical) {
+                ForEach(0..<50) { index in
+                    GeometryReader { geo in
+                        Text("Row #\(index)")
+                            .font(.title)
+                            .frame(width: fullView.size.width)
+                            .background(self.colors[index % 7])
+                            .rotation3DEffect(.degrees(Double(geo.frame(in: .global).minY - fullView.size.height / 2) / 5), axis: (x: 0, y: 1, z: 0))
+                    }
+                    .frame(height: 40)
+                }
+            }
+        }
+    }
+}
+
+struct TaylorSwiftAlbumShowcase: View {
+    let albums = ["taylor_swift", "fearless", "speak_now", "red", "ts_1989", "lover", "folklore"]
+    
+    var body: some View {
+        ZStack {
+            LinearGradient(colors: [.blue, .black], startPoint: .top, endPoint: .bottom)
+                .edgesIgnoringSafeArea(.all)
+            
+            GeometryReader { fullView in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(0..<50) { index in
+                            GeometryReader { geo in
+                                Image(self.albums[index % 7])
+                                    .resizable()
+                                    .frame(width: 150, height: 150)
+                                    .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
+                                    .padding(.vertical)
+                            }
+                            .frame(width: 150)
+                        }
+                    }
+                }
+                .frame(width: fullView.size.width, height: fullView.size.height, alignment: .center)
+            }
+            .frame(height: 200)
         }
     }
 }

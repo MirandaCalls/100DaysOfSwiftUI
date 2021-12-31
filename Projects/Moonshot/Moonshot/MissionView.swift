@@ -35,17 +35,23 @@ struct MissionView: View {
     }
     
     var body: some View {
-        GeometryReader() { geo in
+        GeometryReader() { fullView in
             ScrollView(.vertical) {
                 VStack(spacing: 15) {
-                    VStack {
-                        Image(self.mission.image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: geo.size.width * 0.7)
-                            .padding(.top)
-                            .accessibility(label: Text(mission.displayName))
-                            
+                        GeometryReader { geo in
+                            HStack {
+                                Spacer()
+                                Image(self.mission.image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: self.calculateImageWidth(fullView: fullView, imageContainer: geo))
+                                    .offset(x: 0, y: self.calculateImageOffset(fullView: fullView, imageContainer: geo))
+                                    .accessibility(label: Text(mission.displayName))
+                                Spacer()
+                            }
+                        }
+                        .frame(height: fullView.size.width * 0.7)
+                        .padding(.top, 20)
                         
                         VStack {
                             Text("LAUNCHED")
@@ -57,7 +63,7 @@ struct MissionView: View {
                         .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
                         .accessibilityElement(children: .ignore)
                         .accessibility(label: Text("Launched \(self.mission.formattedLaunchDate)"))
-                    }
+                    
                     
                     Text(self.mission.description)
                         .padding()
@@ -73,8 +79,29 @@ struct MissionView: View {
                     Spacer(minLength: 25)
                 }
             }
+            .coordinateSpace(name: "ScrollView")
         }
         .navigationBarTitle(Text(mission.displayName), displayMode: .inline)
+    }
+    
+    func calculateImageWidth(fullView: GeometryProxy, imageContainer: GeometryProxy) -> CGFloat {
+        var percentage = (imageContainer.frame(in: .named("ScrollView")).maxY - 20) / imageContainer.size.height;
+        if (percentage < 0.8) {
+            percentage = 0.8
+        } else if (percentage > 1) {
+            percentage = 1
+        }
+        
+        return (fullView.size.width * 0.7) * percentage;
+    }
+    
+    func calculateImageOffset(fullView: GeometryProxy, imageContainer: GeometryProxy) -> CGFloat {
+        let offset = abs((imageContainer.frame(in: .named("ScrollView")).maxY - 20) - imageContainer.size.height)
+        if offset > 58 {
+            return 58
+        }
+        
+        return offset
     }
 }
 

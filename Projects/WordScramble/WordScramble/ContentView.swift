@@ -36,14 +36,27 @@ struct ContentView: View {
                     .cornerRadius(10)
                     .padding()
                 
-                List(usedWords, id: \.self) { word in
-                    HStack {
-                        Image(systemName: "\(word.count).circle")
-                        Text(word)
+                GeometryReader { listGeo in
+                    List {
+                        ForEach(0..<self.usedWords.count) { index in
+                            GeometryReader { geo in
+                                HStack {
+                                    Image(systemName: "\(self.usedWords[index].count).circle")
+                                        .foregroundColor(Color(
+                                            red: self.calculateWordCountColor(listGeo: listGeo, rowGeo: geo),
+                                            green: 0.6,
+                                            blue: 0.8
+                                        ))
+                                    Text(self.usedWords[index])
+                                }
+                                .offset(x: self.calculateWordOffset(listGeo: listGeo, rowGeo: geo), y: 0)
+                                .accessibilityElement(children: .ignore)
+                                .accessibility(label: Text("\(self.usedWords[index]), \(self.usedWords[index].count) letters"))
+                            }
+                        }
                     }
-                    .accessibilityElement(children: .ignore)
-                    .accessibility(label: Text("\(word), \(word.count) letters"))
                 }
+                .coordinateSpace(name: "ListArea")
                 
                 TextField("Enter your word", text: $newWord, onCommit: addNewWord)
                     .textFieldStyle(.roundedBorder)
@@ -64,6 +77,25 @@ struct ContentView: View {
                 }
             }
         }
+    }
+    
+    func calculateWordCountColor(listGeo: GeometryProxy, rowGeo: GeometryProxy) -> Double {
+        print(listGeo.size.height)
+        let color = rowGeo.frame(in: .named("ListArea")).minY / (listGeo.size.height * 1.4)
+        if color > 1 {
+            return 1
+        }
+        
+        return color
+    }
+    
+    func calculateWordOffset(listGeo: GeometryProxy, rowGeo: GeometryProxy) -> CGFloat {
+        let offset = rowGeo.frame(in: .named("ListArea")).minY - listGeo.size.height
+        if offset < 0 {
+            return 0
+        }
+        
+        return offset / 2
     }
     
     func startGame() {

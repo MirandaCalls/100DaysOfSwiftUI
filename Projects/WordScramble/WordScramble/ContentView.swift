@@ -38,7 +38,7 @@ struct ContentView: View {
                 
                 GeometryReader { listGeo in
                     List {
-                        ForEach(0..<self.usedWords.count) { index in
+                        ForEach(0..<self.usedWords.count, id: \.self) { index in
                             GeometryReader { geo in
                                 HStack {
                                     Image(systemName: "\(self.usedWords[index].count).circle")

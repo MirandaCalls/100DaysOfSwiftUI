@@ -26,6 +26,8 @@ struct History: View {
                                 .frame(width: 40, height: 40)
                         }
                     }
+                    .accessibilityElement(children: .ignore)
+                    .accessibility(label: Text("Dice rolled: \(result.valuesWrapped)"))
                 }
             }
             .navigationBarTitle("History")

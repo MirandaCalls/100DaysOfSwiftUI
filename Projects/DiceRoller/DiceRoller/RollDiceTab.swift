@@ -30,6 +30,7 @@ struct RollDiceTab: View {
                     Image("WoodTexture")
                         .resizable()
                         .scaledToFill()
+                        .accessibility(hidden: true)
                     
                     LazyHGrid(rows: layout, spacing: 20) {
                         ForEach(0..<self.dice.count, id: \.self) { index in
@@ -39,6 +40,9 @@ struct RollDiceTab: View {
                                 .foregroundStyle(.white, .blue)
                                 .frame(width: 100)
                                 .shadow(radius: 5)
+                                .accessibility(label: Text("\(self.dice[index])"))
+                                .accessibility(hint: Text("Die roll result"))
+                                .accessibility(removeTraits: .isImage)
                         }
                     }
                     .frame(height: 250)

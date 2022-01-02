@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Subsonic",
+        "repositoryURL": "https://github.com/twostraws/Subsonic",
+        "state": {
+          "branch": "main",
+          "revision": "b9ccab1c94294e2dd87b83d2c9cfb8da01629f84",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

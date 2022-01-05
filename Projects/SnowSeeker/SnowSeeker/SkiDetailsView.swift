@@ -11,9 +11,12 @@ struct SkiDetailsView: View {
     let resort: Resort
     
     var body: some View {
-        VStack {
+        Group {
             Text("Elevation: \(self.resort.elevation)m")
+                .layoutPriority(1)
+            Spacer().frame(height: 0)
             Text("Snow: \(self.resort.snowDepth)cm")
+                .layoutPriority(1)
         }
     }
 }

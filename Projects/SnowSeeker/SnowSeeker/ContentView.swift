@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var favorites = Favorites()
-    let resorts: [Resort] = Bundle.main.decode("resorts.json")
+    @State private var resorts: [Resort] = Bundle.main.decode("resorts.json")
+    @State private var filtersSheetOpen = false
     
     var body: some View {
         NavigationView {
@@ -45,6 +46,16 @@ struct ContentView: View {
                 }
             }
             .navigationBarTitle("Resorts")
+            .navigationBarItems(trailing:
+                Button("Filters") {
+                    self.filtersSheetOpen = true
+                }
+            )
+            .sheet(isPresented: self.$filtersSheetOpen) {
+                FiltersView() { filteredResorts in
+                    self.resorts = filteredResorts
+                }
+            }
             
             WelcomeView()
         }

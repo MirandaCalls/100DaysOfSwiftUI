@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A546AB41278680F9006E07F7 /* FiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A546AB40278680F9006E07F7 /* FiltersView.swift */; };
 		A561330727828D1A00C3EB12 /* SnowSeekerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A561330627828D1A00C3EB12 /* SnowSeekerApp.swift */; };
 		A561330927828D1A00C3EB12 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A561330827828D1A00C3EB12 /* ContentView.swift */; };
 		A561330B27828D1C00C3EB12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A561330A27828D1C00C3EB12 /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A546AB40278680F9006E07F7 /* FiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersView.swift; sourceTree = "<group>"; };
 		A561330327828D1A00C3EB12 /* SnowSeeker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnowSeeker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A561330627828D1A00C3EB12 /* SnowSeekerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowSeekerApp.swift; sourceTree = "<group>"; };
 		A561330827828D1A00C3EB12 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				A57549392783DFA60067F2EE /* resorts.json */,
 				A561330627828D1A00C3EB12 /* SnowSeekerApp.swift */,
 				A561330827828D1A00C3EB12 /* ContentView.swift */,
+				A546AB40278680F9006E07F7 /* FiltersView.swift */,
 				A57549412783E79B0067F2EE /* ResortView.swift */,
 				A57549432783E9600067F2EE /* SkiDetailsView.swift */,
 				A57549452783EA180067F2EE /* ResortDetailsView.swift */,
@@ -169,6 +172,7 @@
 				A57549442783E9600067F2EE /* SkiDetailsView.swift in Sources */,
 				A57549462783EA180067F2EE /* ResortDetailsView.swift in Sources */,
 				A5DD2A9327854053003DC0BC /* Favorites.swift in Sources */,
+				A546AB41278680F9006E07F7 /* FiltersView.swift in Sources */,
 				A5DD2A9127853A5F003DC0BC /* Facility.swift in Sources */,
 				A561330927828D1A00C3EB12 /* ContentView.swift in Sources */,
 				A575493C2783E03F0067F2EE /* Resort.swift in Sources */,

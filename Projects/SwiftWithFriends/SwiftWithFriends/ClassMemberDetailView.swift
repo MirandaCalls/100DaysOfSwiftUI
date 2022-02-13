@@ -64,7 +64,7 @@ struct ClassMemberDetailView: View {
 struct ClassMemberDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let class_member = ClassMember(context: PersistenceController.preview.container.viewContext)
-        class_member.id = "882060147325108225"
+        class_member.id = 882060147325108225
         class_member.name = "Geoffrie Alena"
         class_member.username = "MirandaCalls"
         class_member.bio = "🏳️‍⚧️ Curious web developer with a deep love for anime and music. Learning Swift and iOS in #100DaysOfSwiftUI. Stay shiny everyone! (she/her)"

@@ -11,12 +11,12 @@ import Foundation
  * Class used purely for decoding from JSON received from server
  */
 struct ClassMemberDto: Codable {
-    var id: String
+    var twitterId: Int
     var name: String
     var username: String
     var description: String
     var profileImageUrl: String
     var url: String
     var joinedAt: Date
-    var friendIds: [String]
+    var friendIds: [Int]
 }

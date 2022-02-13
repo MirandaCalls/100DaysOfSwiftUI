@@ -16,12 +16,8 @@ extension Friend {
         return NSFetchRequest<Friend>(entityName: "Friend")
     }
 
-    @NSManaged public var id: String?
+    @NSManaged public var id: Int
     @NSManaged public var classMember: ClassMember?
-
-    var wrappedId: String {
-        self.id ?? "No ID"
-    }
 }
 
 extension Friend : Identifiable {

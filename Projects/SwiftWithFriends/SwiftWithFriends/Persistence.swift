@@ -15,7 +15,7 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
 
         let class_member = ClassMember(context: viewContext)
-        class_member.id = "882060147325108225"
+        class_member.id = 882060147325108225
         class_member.name = "Geoffrie Alena"
         class_member.username = "MirandaCalls"
         class_member.bio = "🏳️‍⚧️ Curious web developer with a deep love for anime and music. Learning Swift and iOS in #100DaysOfSwiftUI. Stay shiny everyone! (she/her)"
@@ -24,7 +24,7 @@ struct PersistenceController {
         class_member.joinedAt = Date()
         
         let friend = Friend(context: viewContext)
-        friend.id = "882060147325108225"
+        friend.id = 882060147325108225
         friend.classMember = class_member
         
         return result

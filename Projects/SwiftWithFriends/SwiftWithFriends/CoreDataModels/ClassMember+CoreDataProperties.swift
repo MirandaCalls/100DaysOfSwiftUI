@@ -16,7 +16,7 @@ extension ClassMember {
         return NSFetchRequest<ClassMember>(entityName: "ClassMember")
     }
 
-    @NSManaged public var id: String?
+    @NSManaged public var id: Int
     @NSManaged public var name: String?
     @NSManaged public var username: String?
     @NSManaged public var bio: String?
@@ -47,11 +47,11 @@ extension ClassMember {
         return formatter.string(from: self.joinedAt ?? Date())
     }
     
-    var friendIds: [String] {
+    var friendIds: [Int] {
         let set = friends as? Set<Friend> ?? []
         
         return set.map {
-            $0.wrappedId
+            $0.id
         }
     }
     

@@ -62,7 +62,7 @@ struct ContentView: View {
     func storeIntoCoreData(_ data: [ClassMemberDto]) {
         for classMemberDto in data {
             let class_member = ClassMember(context: self.moc)
-            class_member.id = classMemberDto.id
+            class_member.id = classMemberDto.twitterId
             class_member.name = classMemberDto.name
             class_member.username = classMemberDto.username
             class_member.bio = classMemberDto.description

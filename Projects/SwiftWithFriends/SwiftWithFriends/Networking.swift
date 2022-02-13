@@ -12,7 +12,7 @@ struct Networking {
         completionHandler: @escaping ([ClassMemberDto]) -> Void,
         errorHandler: @escaping () -> Void
     ) {
-        let url = URL(string: "http://localhost/SwiftWithFriendsApi/index.php/classmates")!
+        let url = URL(string: "http://localhost:8080/api/classmates")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
 
@@ -25,12 +25,14 @@ struct Networking {
             
             let decoder = JSONDecoder()
             let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
             decoder.dateDecodingStrategy = .formatted(formatter)
-            if let decoded = try? decoder.decode([ClassMemberDto].self, from: data) {
+            
+            do {
+                let decoded = try decoder.decode([ClassMemberDto].self, from: data)
                 completionHandler(decoded)
-            } else {
-                print("Invalid response from server")
+            } catch {
+                print("Decode error: \(error.localizedDescription)")
                 errorHandler()
             }
         }.resume()
